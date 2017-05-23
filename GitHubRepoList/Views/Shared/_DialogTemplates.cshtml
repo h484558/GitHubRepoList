@@ -1,0 +1,127 @@
+﻿<script type="text/ng-template" id="repo-details-tpl">
+    <div class="repo-owner-image">
+        <img ng-src="{{ repo.owner.avatar_url }}" src="/Content/noImg.png" title="Avatar URL" />
+        <img ng-src="/Repo/OwnerBinUserpic/{{ repo.id }}" class="additional-userpic" title="Bin Img" />
+        <h3>{{ repo.owner.login }}'s "{{ repo.name }}" details</h3>
+    </div>
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="(property, value) in repo">
+                <td>{{ property }}</td>
+                <td ng-if="property != 'owner'">{{ value }}</td>
+                <td ng-if="property == 'owner'">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(ownerProperty, ownerValue) in value" ng-if="ownerProperty != 'userpic'">
+                                <td>{{ ownerProperty }}</td>
+                                <td>{{ ownerValue }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</script>
+
+<script type="text/ng-template" id="new-repo-tpl">
+    <div class="repo-owner-image">
+        <img src="{{ repo.owner.avatar_url }}" />
+        <h3>Add new repo to list</h3>
+    </div>
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="(property, value) in repo" ng-show="property != 'id'">
+                <td>{{ property }}</td>
+                <td ng-if="property != 'owner'">
+                    <input type="text" class="form-control" ng-model="repo[property]">
+                </td>
+                <td ng-if="property == 'owner'">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(ownerProperty, ownerValue) in value" ng-show="ownerProperty != 'id' && ownerProperty != 'userpic'">
+                                <td>{{ ownerProperty }}</td>
+                                <td>
+                                    <input type="text" class="form-control" ng-model="repo[property][ownerProperty]">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>binary_userpic</td>
+                                <td><input type="file" class="form-control" id="bin-userpic-file-input" onchange="angular.element(this).scope().onBinUserpicFileChange(this.files)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button id="save-new-repo-button" class="btn btn-primary" ng-click="saveNewRepo() && closeThisDialog()">SAVE</button>
+</script>
+
+<script type="text/ng-template" id="import-from-github-modal-tpl">
+    <h3>Please specify user's GitHub login</h3>
+    <p>
+        <div class='input-group'>
+            <span class="input-group-addon">https://github.com/</span>
+            <input type='text' class='form-control' ng-model='FormData.githubImportUsername'>
+            <span class="input-group-btn">
+                <button class="btn btn-primary" ng-click="importReposFromGithub() && closeThisDialog()">IMPORT</button>
+            </span>
+        </div>
+    </p>
+</script>
+
+<script type="text/ng-template" id="import-from-json-modal-tpl">
+    <h3>Please select your JSON file</h3>
+    <p>
+        <div class='input-group'>
+            <input type='file' class='form-control' onchange="angular.element(this).scope().onJsonFileChange(this.files)">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" ng-click="importReposFromJson() && closeThisDialog()">IMPORT</button>
+            </span>
+        </div>
+    </p>
+</script>
+
+<script type="text/ng-template" id="login-form-tpl">
+    <h3>Authentication required</h3>
+    <div>
+        <form name="signInForm" ng-submit="signIn(closeThisDialog)">
+            <div class="input-group" id="sign-in-login">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                <input type="text" ng-model="signInCredentials.login" class="form-control" placeholder="Login" autofocus>
+            </div>
+
+            <div class="input-group" id="sign-in-password">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                <input type="password" ng-model="signInCredentials.password" class="form-control" placeholder="Password">
+            </div>
+            <button class="btn btn-md btn-primary btn-block" type="submit">Sign in</button>
+            <button class="btn btn-md btn-default btn-block" ng-click="closeSignInDialog() && closeThisDialog()">Cancel</button>
+        </form>
+    </div>
+</script>

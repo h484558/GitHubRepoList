@@ -1,0 +1,180 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+
+#data-table > thead > tr > th {
+	cursor: pointer;
+}
+
+#data-table > tbody > tr {
+	cursor: move;
+}
+
+#data-table > thead > tr > th:nth-child(1), #data-table > tbody > tr > td:nth-child(1) {
+	text-align: center;
+}
+
+.sort:after {
+	content: '\25b2';
+}
+
+.sort.reverse:after {
+	content: '\25bc';
+}
+
+.repoItem.ui-sortable-selected {
+	background: lightsteelblue !important;
+}
+
+.table-striped>tbody>tr.repoItem.ui-sortable-selected>td {
+    background: lightsteelblue;
+}
+
+.ngdialog-content {
+	min-width: 910px;
+}
+
+thead > tr > th:not(:first-child) {
+    min-width: 90px;
+}
+
+#mode-switcher {
+    display: inline-block;
+}
+
+#actions {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+#action-buttons {
+    margin-bottom: 10px;
+}
+
+#import-export {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.repo-owner-image {
+	text-align: center;
+}
+
+.repo-owner-image > img {
+	width: 150px;
+	height: 150px;
+	border-radius: 100px;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-close {
+    border: 0;
+}
+
+/* Loading animation */
+
+.glyphicon.spinning {
+    font-size: x-large;
+    vertical-align: middle;
+    margin-left: 10px;
+    transform-origin: 50% 58%;
+    margin-bottom: 7px;
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+
+/* /Loading animation */
+
+#success-changes-message {
+    margin-left: 10px;
+    opacity: 0;
+    font-size: small;
+    vertical-align: middle;
+}
+
+/* Success message fade animation */
+.show-success-changes-message {
+    animation: fadeInOutAnimation 5s;
+}
+
+@keyframes fadeInOutAnimation {
+    0% { opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* /Success message fade animation */
+
+.additional-userpic {
+    /*width: 75px !important;
+    height: 75px !important;*/
+}
+
+.sign-in-dialog > .ngdialog-content {
+    min-width: 400px !important;
+}
+
+#sign-in-login > input {
+    border-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#sign-in-login > .input-group-addon {
+    border-bottom: 0;
+    border-bottom-left-radius: 0;
+}
+
+#sign-in-password {
+    margin-bottom: 10px;
+}
+
+#sign-in-password > .input-group-addon {
+    border-top-left-radius: 0;
+}
+
+#sign-in-password  > input {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.sign-in-out-error-dialog > .ngdialog-content, .successful-repo-creation-dialog > .ngdialog-content, .error-dialog > .ngdialog-content {
+    min-width: 420px !important;
+    text-align: center;
+}
+
+.nav-tabs {
+    margin-bottom:  10px !important;
+}
+
+#user-table > thead > tr > th:nth-child(1),
+#user-table > tbody > tr > td:nth-child(1),
+#user-table > tbody > tr > td:nth-child(3),
+#user-table > tbody > tr > td:nth-child(4),
+#user-table > tbody > tr > td:nth-child(5) {
+	text-align: center;
+}

@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>
+    {{ (authorisation.login == null || (!authorisation.is_read && !authorisation.is_admin)) ? "Add new repo" : "Index" }}
+    <span id="loading-spinner" class="glyphicon glyphicon-refresh spinning hidden"></span>
+    <span class="text-success" id="success-changes-message"><span class="glyphicon glyphicon-ok"></span> Changes saved</span>
+</h2>
+
+<button no-authentication-required no-read-required class="btn btn-success" id="action-button-new" ng-click="addNewRepo()">&#128459; NEW</button>
+
+<div ng-controller="UserlistController" read-required>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#repos" aria-controls="repos" role="tab" data-toggle="tab">Repos <span class="badge">{{ githubRepos.length }}</span></a></li>
+        <li role="presentation" admin-required><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Users <span class="badge">{{ userList.length }}</span></a></li>
+    </ul>
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane fade in active" id="repos">
+           <div id="action-buttons">
+                <div id="mode-switcher" class="btn-group" ng-click="switchMode()">
+                    <button type="button" class="btn btn-default btn-primary" id="display-mode-details">&#128441; DETAILS</button>
+                    <button type="button" class="btn btn-default" id="display-mode-edit">&#9998; EDIT</button>
+                </div>
+                <div id="actions" ng-if="mode == 'edit'">
+                    <button class="btn btn-success" id="action-button-new" ng-click="addNewRepo()">&#128459; NEW</button>
+                    <button class="btn btn-danger" id="action-button-delete" ng-click="deleteSelectedRepos()" write-required>&#9932; DELETE</button>
+                </div>
+                <div id="import-export" ng-if="mode == 'edit'" write-required>
+                    <button class="btn btn-default" ng-click="importFromGithubModal()">
+                        <span class="glyphicon glyphicon-floppy-save"></span> IMPORT FROM GITHUB
+                    </button>
+                    <button class="btn btn-default" ng-click="importFromJsonModal()">
+                        <span class="glyphicon glyphicon-floppy-save"></span> IMPORT FROM JSON
+                    </button>
+                    <a href="/Repo" class="btn btn-default" download="repoDB.json">
+                        <span class="glyphicon glyphicon-floppy-open"></span> EXPORT TO JSON
+                    </a>
+                </div>
+            </div>
+            <table id="data-table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" onchange="selectAllTableRows(event)" id="select-all" class="row-selection-checkbox">
+                        </th>
+                        <th ng-click="sortBy('id')">
+                            Repo ID <span class="sort" ng-show="fieldName == 'id'" ng-class="{ reverse: reverse }"></span>
+                        </th>
+                        <th ng-click="sortBy('name')">
+                            Name <span class="sort" ng-show="fieldName == 'name'" ng-class="{ reverse: reverse }"></span>
+                        </th>
+                        <th ng-click="sortBy('full_name')">
+                            Full Name <span class="sort" ng-show="fieldName == 'full_name'" ng-class="{ reverse: reverse }"></span>
+                        </th>
+                        <th ng-click="sortBy('owner.login')">
+                            Owner <span class="sort" ng-show="fieldName == 'owner.login'" ng-class="{ reverse: reverse }"></span>
+                        </th>
+                        <th ng-click="sortBy('html_url')">
+                            HTML URL <span class="sort" ng-show="fieldName == 'html_url'" ng-class="{ reverse: reverse }"></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody ui-sortable='sortableOptions' ng-model="githubRepos">
+                    <tr class="repoItem" ng-model="githubRepos" ng-repeat="repo in githubRepos" ng-dblclick="showRepoDetails(repo)">
+                        <td>
+                            <input type="checkbox" onchange="selectTableRow(event)" class="row-selection-checkbox">
+                        </td>
+                        <td>
+                            <span class="field-value visible">{{ repo.id }}</span>
+                        </td>
+                        <td ng-dblclick="editField($event)">
+                            <span class="field-value visible">{{ repo.name }}</span>
+                            <input class="field-edit form-control hidden" ng-model="repo.name" ng-blur="saveChanges($event)">
+                        </td>
+                        <td ng-dblclick="editField($event)">
+                            <span class="field-value visible">{{ repo.full_name }}</span>
+                            <input class="field-edit form-control hidden" ng-model="repo.full_name" ng-blur="saveChanges($event)">
+                        </td>
+                        <td ng-dblclick="editField($event)">
+                            <span class="field-value visible">{{ repo.owner.login }}</span>
+                            <input class="field-edit form-control hidden" ng-model="repo.owner.login" ng-blur="saveChanges($event)">
+                        </td>
+                        <td ng-dblclick="editField($event)">
+                            <span class="field-value visible">{{ repo.html_url }}</span>
+                            <input class="field-edit form-control hidden" ng-model="repo.html_url" ng-blur="saveChanges($event)">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-if="githubRepos.length == 0" class="text-center h3 text-muted">
+                <td>Nothing is here... yet</td>
+            </div>
+        </div>
+        
+        <div role="tabpanel" class="tab-pane fade" id="users" admin-required>
+            <table id="user-table" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Login
+                        </th>
+                        <th>
+                            Read role
+                        </th>
+                        <th>
+                            Write role
+                        </th>
+                        <th>
+                            Admin role
+                        </th>
+                    </tr>
+                </thead>
+                <tbody ng-model="userList">
+                    <tr ng-repeat="user in userList">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.login }}</td>
+                        <td><input type="checkbox" ng-model="user.is_read" ng-change="updateUserRights(user, {{ user }})" /></td>
+                        <td><input type="checkbox" ng-model="user.is_write" ng-change="updateUserRights(user, {{ user }})" /></td>
+                        <td><input type="checkbox" ng-model="user.is_admin" ng-change="updateUserRights(user, {{ user }})" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
