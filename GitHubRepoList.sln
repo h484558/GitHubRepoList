@@ -5,6 +5,11 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubRepoList", "GitHubRepoList\GitHubRepoList.csproj", "{EE242CC6-D1AF-4C65-86F6-E710B3CD8743}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubRepoListWPFClient", "GitHubRepoListWPFClient\GitHubRepoListWPFClient.csproj", "{1EFB8497-A472-4183-9292-E0F992A8D6B6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EE242CC6-D1AF-4C65-86F6-E710B3CD8743} = {EE242CC6-D1AF-4C65-86F6-E710B3CD8743}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +20,10 @@ Global
 		{EE242CC6-D1AF-4C65-86F6-E710B3CD8743}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE242CC6-D1AF-4C65-86F6-E710B3CD8743}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE242CC6-D1AF-4C65-86F6-E710B3CD8743}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EFB8497-A472-4183-9292-E0F992A8D6B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EFB8497-A472-4183-9292-E0F992A8D6B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EFB8497-A472-4183-9292-E0F992A8D6B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EFB8497-A472-4183-9292-E0F992A8D6B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

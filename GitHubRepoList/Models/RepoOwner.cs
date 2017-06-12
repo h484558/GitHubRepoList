@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 
 namespace GitHubRepoList.Models
 {
+    [Serializable]
     public class RepoOwner
     {
         public int id { get; set; }

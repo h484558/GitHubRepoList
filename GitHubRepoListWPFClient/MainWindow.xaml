@@ -1,0 +1,51 @@
+﻿<Window x:Class="GitHubRepoListWPFClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GitHubRepoListWPFClient"
+        mc:Ignorable="d"
+        Title="GitHubRepoList" Icon="GitHub-Mark-120px-plus.ico" d:DesignWidth="1400" d:DesignHeight="700">
+    <DockPanel>
+        <Menu x:Name="menu" DockPanel.Dock="Top">
+            <MenuItem x:Name="accountMenuItem" Header="Account">
+                <MenuItem x:Name="logOutMenuItem" Header="Log Out" HorizontalAlignment="Left" Width="140" Click="logOutMenuItem_Click"/>
+                <Separator HorizontalAlignment="Left" Height="1" Width="140" RenderTransformOrigin="0.5,0.5">
+                    <Separator.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="-1"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Separator.RenderTransform>
+                </Separator>
+                <MenuItem x:Name="exitMenuItem" Header="Exit" HorizontalAlignment="Left" Width="140" Click="exitMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="importMenuItem" Header="Import">
+                <MenuItem x:Name="importFromJsonMenuItem" Header="from JSON" Click="importFromJsonMenuItem_Click"/>
+                <MenuItem x:Name="importFromGitHubMenuItem" Header="from GitHub" Click="importFromGitHubMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="exportMenuItem" Header="Export">
+                <MenuItem x:Name="exportToJsonMenuItem" Header="to JSON" HorizontalAlignment="Left" Width="140" Click="exportToJsonMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="manageMenuItem" Header="Manage">
+                <MenuItem x:Name="addNewRepoMenuItem" Header="Add new Repo"/>
+                <Separator x:Name="manageSeparator" HorizontalAlignment="Left" Height="1" Width="162"/>
+                <MenuItem x:Name="deleteSelectedMenuItem" Header="Delete Selected" Click="deleteSelectedMenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <ProgressBar x:Name="processRunningProgressBar" Height="16" Width="180"/>
+            <Label x:Name="currentProcessLabel" Content="Ready"/>
+        </StatusBar>
+        <TabControl x:Name="tabControl" DockPanel.Dock="Top">
+            <TabItem x:Name="repoTab" Header="Repos">
+                <Grid>
+                    <DataGrid x:Name="repoDataGrid" CellEditEnding="repoDataGrid_CellEditEnding" />
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="userTab" Header="Users"/>
+        </TabControl>
+    </DockPanel>
+</Window>

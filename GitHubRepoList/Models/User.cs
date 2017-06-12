@@ -7,6 +7,7 @@ using System.Web.Script.Serialization;
 
 namespace GitHubRepoList.Models
 {
+    [Serializable]
     public class User
     {
         public int id { get; set; }

@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://githubrepolist.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://githubrepolist.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://githubrepolist.org/">
+      <s:element name="Authenticate">
+        <s:complexType />
+      </s:element>
+      <s:element name="AuthenticateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AuthenticateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticationHeader" type="tns:AuthenticationHeader" />
+      <s:complexType name="AuthenticationHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Login" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="GetRepos">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetReposResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetReposResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRepoDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRepoDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetRepoDetailsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateRepo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="newRepoJson" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateRepoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateRepoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateRepos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="newRepoJson" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateReposResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateReposResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EditRepo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="repoJson" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EditRepoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EditRepoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteRepos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ids" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DeleteReposResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteReposResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportReposFromGitHub">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportReposFromGitHubResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ImportReposFromGitHubResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AuthenticateSoapIn">
+    <wsdl:part name="parameters" element="tns:Authenticate" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthenticateResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetReposSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRepos" />
+  </wsdl:message>
+  <wsdl:message name="GetReposSoapOut">
+    <wsdl:part name="parameters" element="tns:GetReposResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetReposAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetRepoDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRepoDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetRepoDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetRepoDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetRepoDetailsAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="CreateRepoSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateRepo" />
+  </wsdl:message>
+  <wsdl:message name="CreateRepoSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateRepoResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateRepoAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="CreateReposSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateRepos" />
+  </wsdl:message>
+  <wsdl:message name="CreateReposSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateReposResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateReposAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="EditRepoSoapIn">
+    <wsdl:part name="parameters" element="tns:EditRepo" />
+  </wsdl:message>
+  <wsdl:message name="EditRepoSoapOut">
+    <wsdl:part name="parameters" element="tns:EditRepoResponse" />
+  </wsdl:message>
+  <wsdl:message name="EditRepoAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="DeleteReposSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteRepos" />
+  </wsdl:message>
+  <wsdl:message name="DeleteReposSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteReposResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteReposAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="ImportReposFromGitHubSoapIn">
+    <wsdl:part name="parameters" element="tns:ImportReposFromGitHub" />
+  </wsdl:message>
+  <wsdl:message name="ImportReposFromGitHubSoapOut">
+    <wsdl:part name="parameters" element="tns:ImportReposFromGitHubResponse" />
+  </wsdl:message>
+  <wsdl:message name="ImportReposFromGitHubAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:portType name="GitHubRepoListServiceSoap">
+    <wsdl:operation name="Authenticate">
+      <wsdl:input message="tns:AuthenticateSoapIn" />
+      <wsdl:output message="tns:AuthenticateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRepos">
+      <wsdl:input message="tns:GetReposSoapIn" />
+      <wsdl:output message="tns:GetReposSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRepoDetails">
+      <wsdl:input message="tns:GetRepoDetailsSoapIn" />
+      <wsdl:output message="tns:GetRepoDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateRepo">
+      <wsdl:input message="tns:CreateRepoSoapIn" />
+      <wsdl:output message="tns:CreateRepoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateRepos">
+      <wsdl:input message="tns:CreateReposSoapIn" />
+      <wsdl:output message="tns:CreateReposSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EditRepo">
+      <wsdl:input message="tns:EditRepoSoapIn" />
+      <wsdl:output message="tns:EditRepoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRepos">
+      <wsdl:input message="tns:DeleteReposSoapIn" />
+      <wsdl:output message="tns:DeleteReposSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportReposFromGitHub">
+      <wsdl:input message="tns:ImportReposFromGitHubSoapIn" />
+      <wsdl:output message="tns:ImportReposFromGitHubSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GitHubRepoListServiceSoap" type="tns:GitHubRepoListServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Authenticate">
+      <soap:operation soapAction="http://githubrepolist.org/Authenticate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AuthenticateAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRepos">
+      <soap:operation soapAction="http://githubrepolist.org/GetRepos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetReposAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRepoDetails">
+      <soap:operation soapAction="http://githubrepolist.org/GetRepoDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetRepoDetailsAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateRepo">
+      <soap:operation soapAction="http://githubrepolist.org/CreateRepo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CreateRepoAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateRepos">
+      <soap:operation soapAction="http://githubrepolist.org/CreateRepos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CreateReposAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditRepo">
+      <soap:operation soapAction="http://githubrepolist.org/EditRepo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:EditRepoAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRepos">
+      <soap:operation soapAction="http://githubrepolist.org/DeleteRepos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:DeleteReposAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportReposFromGitHub">
+      <soap:operation soapAction="http://githubrepolist.org/ImportReposFromGitHub" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ImportReposFromGitHubAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GitHubRepoListServiceSoap12" type="tns:GitHubRepoListServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Authenticate">
+      <soap12:operation soapAction="http://githubrepolist.org/Authenticate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AuthenticateAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRepos">
+      <soap12:operation soapAction="http://githubrepolist.org/GetRepos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetReposAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRepoDetails">
+      <soap12:operation soapAction="http://githubrepolist.org/GetRepoDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetRepoDetailsAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateRepo">
+      <soap12:operation soapAction="http://githubrepolist.org/CreateRepo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CreateRepoAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateRepos">
+      <soap12:operation soapAction="http://githubrepolist.org/CreateRepos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CreateReposAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditRepo">
+      <soap12:operation soapAction="http://githubrepolist.org/EditRepo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:EditRepoAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRepos">
+      <soap12:operation soapAction="http://githubrepolist.org/DeleteRepos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:DeleteReposAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportReposFromGitHub">
+      <soap12:operation soapAction="http://githubrepolist.org/ImportReposFromGitHub" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ImportReposFromGitHubAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GitHubRepoListService">
+    <wsdl:port name="GitHubRepoListServiceSoap" binding="tns:GitHubRepoListServiceSoap">
+      <soap:address location="http://localhost:59130/GitHubRepoListService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="GitHubRepoListServiceSoap12" binding="tns:GitHubRepoListServiceSoap12">
+      <soap12:address location="http://localhost:59130/GitHubRepoListService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

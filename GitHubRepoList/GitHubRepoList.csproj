@@ -99,6 +99,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\RepoDB.mdf" />
+    <Content Include="App_Data\RepoDB_log.ldf">
+      <DependentUpon>RepoDB.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\custom.css" />
@@ -107,6 +111,7 @@
     <Content Include="Content\noImg.png" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="GitHubRepoListService.asmx" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -132,6 +137,9 @@
     <Compile Include="Controllers\RepoController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WriteRightsRequiredAttribute.cs" />
+    <Compile Include="GitHubRepoListService.asmx.cs">
+      <DependentUpon>GitHubRepoListService.asmx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -160,7 +168,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Repo\" />
     <Folder Include="Views\User\" />
   </ItemGroup>

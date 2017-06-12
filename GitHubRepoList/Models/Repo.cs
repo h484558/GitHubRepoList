@@ -7,6 +7,7 @@ using System.Web;
 
 namespace GitHubRepoList.Models
 {
+    [Serializable]
     public class Repo
     {
         public int id { get; set;  }
