@@ -28,22 +28,36 @@ namespace GitHubRepoListWPFClient
         public AuthWindow()
         {
             InitializeComponent();
+            repoService.AuthenticateCompleted += RepoService_AuthenticateCompleted;
+        }
+
+        private void RepoService_AuthenticateCompleted(object sender, GitHubRepoListService.AuthenticateCompletedEventArgs e)
+        {
+            if (e.Result == string.Empty)
+            {
+                signInButton.Content = "Sign in";
+                signInButton.IsEnabled = true;
+                this.Cursor = Cursors.Arrow;
+                MessageBox.Show("Please check your authentication credentials!", "Login failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                AuthDetails = new JavaScriptSerializer().Deserialize<AuthenticationDetails>(e.Result);
+                this.DialogResult = true;
+            }
         }
 
         private void signInButton_Click(object sender, RoutedEventArgs e)
         {
             authHeader = new GitHubRepoListService.AuthenticationHeader { Login = authLoginTextBox.Text, Password = authPasswordBox.Password };
             repoService.AuthenticationHeaderValue = authHeader;
-            string authJsonResult = repoService.Authenticate();
 
-            if (authJsonResult == string.Empty)
-            {
-                MessageBox.Show("Please check your authentication credentials!", "Login failed", MessageBoxButton.OK, MessageBoxImage.Error);
-            } else
-            {
-                AuthDetails = new JavaScriptSerializer().Deserialize<AuthenticationDetails>(authJsonResult);
-                this.DialogResult = true;
-            } 
+            // Show user that we're doing something
+            signInButton.Content = "Signing in...";
+            signInButton.IsEnabled = false;
+            this.Cursor = Cursors.Wait;
+
+            repoService.AuthenticateAsync();
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)

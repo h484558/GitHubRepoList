@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GitHubRepoListWPFClient"
         mc:Ignorable="d"
-        Title="NewRepoWindow" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+        Title="Create New Repo" Height="240" Width="350.212" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" Icon="GitHub-Mark-120px-plus.ico">
+    <StackPanel>
+        <Grid Height="203">
+            <Label x:Name="label" Content="Name:" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="label1" Content="Full Name:" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="label2" Content="Description:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="label3" Content="URL:" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="label4" Content="Created At:" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="nameTextBox" Margin="100,10,0,0" Text="" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="220" KeyUp="nameTextBox_KeyUp" MaxLines="1" IsUndoEnabled="True"/>
+            <TextBox x:Name="fullNameTextBox" Height="23" Margin="100,41,0,0" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Width="220" MaxLines="1"/>
+            <TextBox x:Name="descriptionTextBox" Height="23" Margin="100,73,0,0" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Width="220" MaxLines="1"/>
+            <TextBox x:Name="urlTextBox" Margin="100,103,0,0" Text="" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="220" MaxLines="1"/>
+            <TextBox x:Name="createdAtTextBox" Height="23" Margin="100,134,0,0" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Width="220" MaxLines="1"/>
+            <Button x:Name="createRepoButton" Content="Create" HorizontalAlignment="Left" Margin="165,173,0,0" VerticalAlignment="Top" Width="75" IsDefault="True" Click="createRepoButton_Click"/>
+            <Button x:Name="button1" Content="Cancel
+" HorizontalAlignment="Left" Margin="245,173,0,0" VerticalAlignment="Top" Width="75" IsCancel="True"/>
+        </Grid>
+    </StackPanel>
 </Window>

@@ -2,6 +2,7 @@
 using GitHubRepoList.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -18,7 +19,7 @@ namespace GitHubRepoList
         public string Password;
     }
 
-    public class UserInfo
+    public class UserInfo : IDisposable
     {
         private User user;
         RepoDBContext db = new RepoDBContext();
@@ -30,23 +31,25 @@ namespace GitHubRepoList
 
         public bool CanRead()
         {
-            if (user == null) return false;
-            if (!user.is_read && !user.is_admin) return false;
+            if ((user == null) || (!user.is_read && !user.is_admin)) return false;
             return true;
         }
 
         public bool CanWrite()
         {
-            if (user == null) return false;
-            if (!user.is_write && !user.is_admin) return false;
+            if ((user == null) || (!user.is_write && !user.is_admin)) return false;
             return true;
         }
 
         public bool IsAdmin()
         {
-            if (user == null) return false;
-            if (!user.is_admin) return false;
+            if (user == null || !user.is_admin) return false;
             return true;
+        }
+
+        public void Dispose()
+        {
+            db.Dispose();
         }
     }
 
@@ -87,7 +90,7 @@ namespace GitHubRepoList
         {
             if (!(new UserInfo(AuthInfo.Login).CanRead()))
             {
-                return string.Empty;
+                return new JavaScriptSerializer().Serialize(new { status = "Fail", message = "Insufficient privileges!" });
             }
 
             var repos = db.Repos.Include("owner").OrderBy(r => r.sort_position);
@@ -101,6 +104,11 @@ namespace GitHubRepoList
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string GetRepoDetails(int id)
         {
+            if (!(new UserInfo(AuthInfo.Login).CanRead()))
+            {
+                return new JavaScriptSerializer().Serialize(new { status = "Fail", message = "Insufficient privileges!" });
+            }
+
             var repo = db.Repos.Include("owner").Where(r => r.id == id).FirstOrDefault();
             var json = new JavaScriptSerializer().Serialize(repo);
             return json;
@@ -149,6 +157,10 @@ namespace GitHubRepoList
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string EditRepo(string repoJson)
         {
+            if (!(new UserInfo(AuthInfo.Login).CanWrite()))
+            {
+                return new JavaScriptSerializer().Serialize(new { status = "Fail", message = "Insufficient privileges!" });
+            }
             try
             {
                 Repo repo = new JavaScriptSerializer().Deserialize<Repo>(repoJson);
@@ -170,6 +182,10 @@ namespace GitHubRepoList
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string DeleteRepos(int[] ids)
         {
+            if (!(new UserInfo(AuthInfo.Login).CanWrite()))
+            {
+                return new JavaScriptSerializer().Serialize(new { status = "Fail", message = "Insufficient privileges!" });
+            }
             try
             {
                 var reposToRemove = db.Repos.Include("owner").Where(r => ids.Contains(r.id));
@@ -205,6 +221,10 @@ namespace GitHubRepoList
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string ImportReposFromGitHub(string login)
         {
+            if (!(new UserInfo(AuthInfo.Login).CanWrite()))
+            {
+                return new JavaScriptSerializer().Serialize(new { status = "Fail", message = "Insufficient privileges!" });
+            }
             try
             {
                 string html = string.Empty;
@@ -230,6 +250,51 @@ namespace GitHubRepoList
             }
         }
 
+        [WebMethod]
+        [SoapHeader("AuthInfo")]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string GetUsers()
+        {
+            if (!(new UserInfo(AuthInfo.Login).IsAdmin()))
+            {
+                return new JavaScriptSerializer().Serialize(new { status = "Fail", message = "Insufficient privileges!" });
+            }
+            var users = db.Users;
+            var json = new JavaScriptSerializer().Serialize(users);
+            return json;
+        }
 
+        [WebMethod]
+        [SoapHeader("AuthInfo")]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string EditUser(string userJson)
+        {
+            if (!(new UserInfo(AuthInfo.Login).IsAdmin()))
+            {
+                return new JavaScriptSerializer().Serialize(new { status = "Fail", message = "Insufficient privileges!" });
+            }
+            try
+            {
+                User user = new JavaScriptSerializer().Deserialize<User>(userJson);
+                db.Users.Attach(user);
+                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(user).Property(u => u.password).IsModified = false;
+                if (db.Users.Local.Where(u => u.is_admin == true).Count() < 1)
+                {
+                    return new JavaScriptSerializer().Serialize(new { status = "Fail", message = "There should be at least one admin user!" });
+                }
+                else
+                {
+                    db.SaveChanges();
+                }
+
+                return new JavaScriptSerializer().Serialize(new { status = "OK" });
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return new JavaScriptSerializer().Serialize(new { status = "Fail", message = ex.Message });
+            }
+        }
     }
 }

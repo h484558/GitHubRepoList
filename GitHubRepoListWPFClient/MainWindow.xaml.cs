@@ -58,12 +58,13 @@ namespace GitHubRepoListWPFClient
                 repoDataGrid.ItemsSource = new JavaScriptSerializer().Deserialize<Repo[]>(repoService.GetRepos());
             } else
             {
-                this.Close();   // Close MainWindow if we have no permission to read
-                MessageBoxResult createNewRepo = MessageBox.Show("You have no permission to read! Do you wish to create a new repo?", "Insufficient Privileges", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (createNewRepo == MessageBoxResult.Yes)
-                {
-                    // Open new repo form
-                }
+                this.Hide();   // Hide MainWindow if we have no permission to read
+                SuggestRepoCreation();
+            }
+
+            if (authDetails.IsAdmin)
+            {
+                userDataGrid.ItemsSource = new JavaScriptSerializer().Deserialize<User[]>(repoService.GetUsers());      
             }
 
             if (!authDetails.IsWrite && !authDetails.IsAdmin)
@@ -84,7 +85,31 @@ namespace GitHubRepoListWPFClient
             repoService.CreateReposCompleted += RepoService_CreateReposCompleted;
             repoService.EditRepoCompleted += RepoService_EditRepoCompleted;
             repoService.DeleteReposCompleted += RepoService_DeleteReposCompleted;
-            // processRunningProgressBar.
+            repoService.EditUserCompleted += RepoService_EditUserCompleted;
+        }
+
+        private void SuggestRepoCreation(string message = "You have no permission to read! Do you wish to create a new repo?")
+        {
+            MessageBoxResult createNewRepo = MessageBox.Show(message, "Insufficient Privileges", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (createNewRepo == MessageBoxResult.Yes)
+            {
+                var newRepoDialog = new NewRepoWindow(authDetails.Login);
+                if (newRepoDialog.ShowDialog() == true)
+                {
+                    var newRepo = newRepoDialog.NewRepo;
+                    repoService.CreateRepo(new JavaScriptSerializer().Serialize(newRepo));
+                    MessageBox.Show("New repo has been created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    SuggestRepoCreation("Do you want to create one more repo?");
+                }
+                else
+                {
+                    MessageBox.Show("No changes have been made!", "No Changes", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Application.Current.Shutdown();
+                }
+            } else
+            {
+                Application.Current.Shutdown();
+            }
         }
 
         private void HandleServiceResponse(string eventArgsResult, string successMessage, bool skipUpdateDatagrid = false)
@@ -107,6 +132,11 @@ namespace GitHubRepoListWPFClient
 
             if (!skipUpdateDatagrid)
                 UpdateDataGrid();
+        }
+
+        private void RepoService_EditUserCompleted(object sender, GitHubRepoListService.EditUserCompletedEventArgs e)
+        {
+            HandleServiceResponse(e.Result, "User has been successfully updated!", true);
         }
 
         private void RepoService_DeleteReposCompleted(object sender, GitHubRepoListService.DeleteReposCompletedEventArgs e)
@@ -153,8 +183,17 @@ namespace GitHubRepoListWPFClient
 
         private void UpdateDataGrid()
         {
-            repoDataGrid.ItemsSource = null;
-            repoDataGrid.ItemsSource = new JavaScriptSerializer().Deserialize<Repo[]>(repoService.GetRepos());
+            try
+            {
+                repoDataGrid.ItemsSource = null;
+                repoDataGrid.ItemsSource = new JavaScriptSerializer().Deserialize<Repo[]>(repoService.GetRepos());
+            } catch (MissingMethodException ex)
+            {
+                MessageBox.Show("Authentication credentials have changed! Please sign in again.", "Outdated Authentication Credentials", MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.Hide();
+                new MainWindow().Show();
+                this.Close();
+            }
         }
 
         private void StartProcessVisualisation(string message)
@@ -250,9 +289,7 @@ namespace GitHubRepoListWPFClient
         private void deleteSelectedMenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Are you sure you want to delete all selected entries?", "Delete Selected?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
-            {
                 return;
-            }
             StartProcessVisualisation("Deleting selected repos...");
             Repo[] repos = repoDataGrid.SelectedItems.Cast<Repo>().ToArray();
             List<int> idsToDelete = new List<int>();
@@ -274,7 +311,7 @@ namespace GitHubRepoListWPFClient
                 if (column != null)
                 {
                     var bindingPath = (column.Binding as Binding).Path.Path;    // column name
-                    dynamic newValue = null;   // This might be string or boolean depending on editingElement type
+                    dynamic newValue = null;
 
                     if (e.EditingElement.GetType() == typeof(TextBox))
                     {
@@ -300,8 +337,67 @@ namespace GitHubRepoListWPFClient
                         MessageBox.Show(ex.Message, "Error saving new value", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     
-                    string serializedRepo = new JavaScriptSerializer().Serialize(editedRepo);
+                    // string serializedRepo = new JavaScriptSerializer().Serialize(editedRepo);
                     repoService.EditRepoAsync(new JavaScriptSerializer().Serialize(editedRepo));
+                }
+            }
+        }
+
+        private void addNewRepoMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var newRepoDialog = new NewRepoWindow(authDetails.Login);
+            if (newRepoDialog.ShowDialog() == true)
+            {
+                var newRepo = newRepoDialog.NewRepo;
+                repoService.CreateRepoAsync(new JavaScriptSerializer().Serialize(newRepo));
+            }
+            else
+            {
+                StopProcessVisualisation("No changes have been made!");
+                processRunningProgressBar.Foreground = Brushes.Gold;
+            }
+        }
+
+        private void userDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            StartProcessVisualisation("Updating user...");
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var column = e.Column as DataGridBoundColumn;
+                if (column != null)
+                {
+                    var bindingPath = (column.Binding as Binding).Path.Path;    // column name
+                    dynamic newValue = null;
+
+                    if (e.EditingElement.GetType() == typeof(TextBox))
+                    {
+                        newValue = (e.EditingElement as TextBox).Text;
+                    }
+                    else if (e.EditingElement.GetType() == typeof(CheckBox))
+                    {
+                        newValue = (e.EditingElement as CheckBox).IsChecked;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Can't edit this type of field", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    var editedUser = e.Row.Item as User;
+                    Type repoType = typeof(User);
+                    PropertyInfo userPropertyInfo = repoType.GetProperty(bindingPath);
+                    try
+                    {
+                        dynamic convertedPropertyValue = Convert.ChangeType(newValue, userPropertyInfo.PropertyType);
+                        userPropertyInfo.SetValue(editedUser, convertedPropertyValue);
+                    }
+                    catch (FormatException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error saving new value", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+                    //string serializedUser = new JavaScriptSerializer().Serialize(editedUser);
+                    repoService.EditUserAsync(new JavaScriptSerializer().Serialize(editedUser));
                 }
             }
         }

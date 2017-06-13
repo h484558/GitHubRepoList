@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GitHubRepoListWPFClient"
         mc:Ignorable="d"
-        Title="GitHubRepoList" Icon="GitHub-Mark-120px-plus.ico" d:DesignWidth="1400" d:DesignHeight="700">
+        Title="GitHubRepoList" Icon="GitHub-Mark-120px-plus.ico" d:DesignWidth="1400" d:DesignHeight="700" MinHeight="700" MinWidth="1400">
     <DockPanel>
         <Menu x:Name="menu" DockPanel.Dock="Top">
             <MenuItem x:Name="accountMenuItem" Header="Account">
@@ -30,7 +30,7 @@
                 <MenuItem x:Name="exportToJsonMenuItem" Header="to JSON" HorizontalAlignment="Left" Width="140" Click="exportToJsonMenuItem_Click"/>
             </MenuItem>
             <MenuItem x:Name="manageMenuItem" Header="Manage">
-                <MenuItem x:Name="addNewRepoMenuItem" Header="Add new Repo"/>
+                <MenuItem x:Name="addNewRepoMenuItem" Header="Add new Repo" Click="addNewRepoMenuItem_Click"/>
                 <Separator x:Name="manageSeparator" HorizontalAlignment="Left" Height="1" Width="162"/>
                 <MenuItem x:Name="deleteSelectedMenuItem" Header="Delete Selected" Click="deleteSelectedMenuItem_Click"/>
             </MenuItem>
@@ -42,10 +42,21 @@
         <TabControl x:Name="tabControl" DockPanel.Dock="Top">
             <TabItem x:Name="repoTab" Header="Repos">
                 <Grid>
-                    <DataGrid x:Name="repoDataGrid" CellEditEnding="repoDataGrid_CellEditEnding" />
+                    <DataGrid x:Name="repoDataGrid" CellEditEnding="repoDataGrid_CellEditEnding">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Delete Selected" Click="deleteSelectedMenuItem_Click"/>
+                                <MenuItem Header="Add new Repo" Click="addNewRepoMenuItem_Click"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                    </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="userTab" Header="Users"/>
+            <TabItem x:Name="userTab" Header="Users">
+                <Grid>
+                    <DataGrid x:Name="userDataGrid" CellEditEnding="userDataGrid_CellEditEnding"/>
+                </Grid>
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>
