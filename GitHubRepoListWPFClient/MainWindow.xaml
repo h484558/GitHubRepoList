@@ -42,7 +42,7 @@
         <TabControl x:Name="tabControl" DockPanel.Dock="Top">
             <TabItem x:Name="repoTab" Header="Repos">
                 <Grid>
-                    <DataGrid x:Name="repoDataGrid" CellEditEnding="repoDataGrid_CellEditEnding">
+                    <DataGrid x:Name="repoDataGrid" CellEditEnding="repoDataGrid_CellEditEnding" PreviewKeyUp="repoDataGrid_PreviewKeyUp">
                         <DataGrid.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Delete Selected" Click="deleteSelectedMenuItem_Click"/>
@@ -52,7 +52,7 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="userTab" Header="Users">
+            <TabItem x:Name="userTab" Header="Users" Visibility="Collapsed">
                 <Grid>
                     <DataGrid x:Name="userDataGrid" CellEditEnding="userDataGrid_CellEditEnding"/>
                 </Grid>

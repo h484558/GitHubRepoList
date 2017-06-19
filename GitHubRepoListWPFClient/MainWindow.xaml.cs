@@ -3,28 +3,21 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using GitHubRepoList.Models;
 using System.Web.Script.Serialization;
-using System.Web.Services.Protocols;
 using Microsoft.Win32;
 using System.IO;
 using System.Reflection;
+using System.Net;
 
 namespace GitHubRepoListWPFClient
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         GitHubRepoListService.GitHubRepoListService repoService = new GitHubRepoListService.GitHubRepoListService();
@@ -33,13 +26,14 @@ namespace GitHubRepoListWPFClient
 
         class ServiceResponse
         {
-            public string status;
-            public string message;
+            public string status { get; set; }
+            public string message { get; set; }
         }
 
         public MainWindow()
         {
             InitializeComponent();
+
             AuthenticaticateUser();
 
             if (authDetails == null)
@@ -48,11 +42,7 @@ namespace GitHubRepoListWPFClient
                 return;
             }
 
-            if (!authDetails.IsAdmin)
-            {
-                userTab.Visibility = Visibility.Collapsed;
-            }
-
+            // Suggest repo creation if current user doesn't have read privileges
             if (authDetails.IsRead || authDetails.IsAdmin)
             {
                 repoDataGrid.ItemsSource = new JavaScriptSerializer().Deserialize<Repo[]>(repoService.GetRepos());
@@ -62,11 +52,14 @@ namespace GitHubRepoListWPFClient
                 SuggestRepoCreation();
             }
 
+            // Show Users table if current user is admin
             if (authDetails.IsAdmin)
             {
-                userDataGrid.ItemsSource = new JavaScriptSerializer().Deserialize<User[]>(repoService.GetUsers());      
+                userTab.Visibility = Visibility.Visible;    // Users tab has Collapsed visibility by default
+                userDataGrid.ItemsSource = new JavaScriptSerializer().Deserialize<User[]>(repoService.GetUsers());
             }
 
+            // Hide write controls on form
             if (!authDetails.IsWrite && !authDetails.IsAdmin)
             {
                 importMenuItem.Visibility = Visibility.Collapsed;
@@ -91,9 +84,11 @@ namespace GitHubRepoListWPFClient
         private void SuggestRepoCreation(string message = "You have no permission to read! Do you wish to create a new repo?")
         {
             MessageBoxResult createNewRepo = MessageBox.Show(message, "Insufficient Privileges", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
             if (createNewRepo == MessageBoxResult.Yes)
             {
                 var newRepoDialog = new NewRepoWindow(authDetails.Login);
+
                 if (newRepoDialog.ShowDialog() == true)
                 {
                     var newRepo = newRepoDialog.NewRepo;
@@ -115,6 +110,7 @@ namespace GitHubRepoListWPFClient
         private void HandleServiceResponse(string eventArgsResult, string successMessage, bool skipUpdateDatagrid = false)
         {
             var serviceResponse = new JavaScriptSerializer().Deserialize<ServiceResponse>(eventArgsResult);
+
             if (serviceResponse.status == "OK")
             {
                 UpdateDataGrid();
@@ -136,38 +132,86 @@ namespace GitHubRepoListWPFClient
 
         private void RepoService_EditUserCompleted(object sender, GitHubRepoListService.EditUserCompletedEventArgs e)
         {
-            HandleServiceResponse(e.Result, "User has been successfully updated!", true);
+            try
+            {
+                HandleServiceResponse(e.Result, "User has been successfully updated!");
+            }
+            catch (TargetInvocationException)
+            {
+                StopProcessVisualisation("Connection lost!", true);
+                MessageBox.Show("Connection lost! Please try again later.", "Connection lost", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void RepoService_DeleteReposCompleted(object sender, GitHubRepoListService.DeleteReposCompletedEventArgs e)
         {
-            HandleServiceResponse(e.Result, "Selected entries were successfully deleted!");
+            try
+            {
+                HandleServiceResponse(e.Result, "Selected entries were successfully deleted!");
+            }
+            catch (TargetInvocationException)
+            {
+                StopProcessVisualisation("Connection lost!", true);
+                MessageBox.Show("Connection lost! Please try again later.", "Connection lost", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void RepoService_EditRepoCompleted(object sender, GitHubRepoListService.EditRepoCompletedEventArgs e)
         {
-            // No need to update datagrid here
-            HandleServiceResponse(e.Result, "Changes saved!", true);
+            try
+            {
+                HandleServiceResponse(e.Result, "Changes saved!", true);
+            }
+            catch (TargetInvocationException)
+            {
+                StopProcessVisualisation("Connection lost!", true);
+                MessageBox.Show("Connection lost! Please try again later.", "Connection lost", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void RepoService_CreateReposCompleted(object sender, GitHubRepoListService.CreateReposCompletedEventArgs e)
         {
-            HandleServiceResponse(e.Result, "New repos created successfully!");
+            try
+            {
+                HandleServiceResponse(e.Result, "New repos created successfully!");
+            }
+            catch (TargetInvocationException)
+            {
+                StopProcessVisualisation("Connection lost!", true);
+                MessageBox.Show("Connection lost! Please try again later.", "Connection lost", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void RepoService_CreateRepoCompleted(object sender, GitHubRepoListService.CreateRepoCompletedEventArgs e)
         {
-            HandleServiceResponse(e.Result, "New repo created successfully!");
+            try
+            {
+                HandleServiceResponse(e.Result, "New repo created successfully!");
+            }
+            catch (TargetInvocationException)
+            {
+                StopProcessVisualisation("Connection lost!", true);
+                MessageBox.Show("Connection lost! Please try again later.", "Connection lost", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void RepoService_ImportReposFromGitHubCompleted(object sender, GitHubRepoListService.ImportReposFromGitHubCompletedEventArgs e)
         {
-            HandleServiceResponse(e.Result, "Import finished successfully!");
+            try
+            {
+                HandleServiceResponse(e.Result, "Import finished successfully!");
+            }
+            catch (TargetInvocationException)
+            {
+                StopProcessVisualisation("Connection lost!", true);
+                MessageBox.Show("Connection lost! Please try again later.", "Connection lost", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void AuthenticaticateUser()
         {
             AuthWindow aw = new AuthWindow();
+
             if (aw.ShowDialog() == true)
             {
                 authDetails = aw.AuthDetails;
@@ -187,10 +231,10 @@ namespace GitHubRepoListWPFClient
             {
                 repoDataGrid.ItemsSource = null;
                 repoDataGrid.ItemsSource = new JavaScriptSerializer().Deserialize<Repo[]>(repoService.GetRepos());
-            } catch (MissingMethodException ex)
+            } catch (Exception)
             {
-                MessageBox.Show("Authentication credentials have changed! Please sign in again.", "Outdated Authentication Credentials", MessageBoxButton.OK, MessageBoxImage.Warning);
                 this.Hide();
+                MessageBox.Show("Authentication credentials have changed! Please sign in again.", "Outdated Authentication Credentials", MessageBoxButton.OK, MessageBoxImage.Warning);
                 new MainWindow().Show();
                 this.Close();
             }
@@ -238,6 +282,7 @@ namespace GitHubRepoListWPFClient
         private void importFromJsonMenuItem_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog jsonFileDialog = new OpenFileDialog();
+
             if(jsonFileDialog.ShowDialog() == false)
             {
                 return;
@@ -247,25 +292,21 @@ namespace GitHubRepoListWPFClient
 
             Stream jsonFileStream = jsonFileDialog.OpenFile();
 
-            string newReposJsonString;
             using (StreamReader reader = new StreamReader(jsonFileStream, Encoding.UTF8))
             {
-                newReposJsonString = reader.ReadToEnd();
+                string newReposJsonString = reader.ReadToEnd();
+                try
+                {
+                    repoService.CreateReposAsync(newReposJsonString);
+                }
+                catch (ArgumentException)
+                {
+                    StopProcessVisualisation("Ready");
+                    MessageBox.Show("Failed to parse JSON file!", "Invalid JSON file", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
             }
-
-            Repo[] newRepos;
-
-            try
-            {
-                newRepos = new JavaScriptSerializer().Deserialize<Repo[]>(newReposJsonString);
-            } catch (ArgumentException)
-            {
-                StopProcessVisualisation("Ready");
-                MessageBox.Show("Failed to parse JSON file!", "Invalid JSON file", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            repoService.CreateReposAsync(new JavaScriptSerializer().Serialize(newRepos));
+            
         }
 
         private void exportToJsonMenuItem_Click(object sender, RoutedEventArgs e)
@@ -279,7 +320,16 @@ namespace GitHubRepoListWPFClient
                 StartProcessVisualisation(string.Format("Exporting repos to: {0}", saveJsonFileDialog.FileName));
                 using (StreamWriter writer = new StreamWriter(saveJsonFileDialog.OpenFile()))
                 {
-                    writer.Write(repoService.GetRepos());
+                    try
+                    {
+                        writer.Write(repoService.GetRepos());
+                    }
+                    catch (WebException)
+                    {
+                        StopProcessVisualisation("Connection lost!", true);
+                        MessageBox.Show("Connection lost! Please try again later.", "Connection lost", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
                 }
             }
             StopProcessVisualisation(string.Format("All repos have been exported to: {0}", saveJsonFileDialog.FileName));
@@ -297,9 +347,8 @@ namespace GitHubRepoListWPFClient
             {
                 idsToDelete.Add(repo.id);
             }
-            // repoService.DeleteRepos(idsToDelete.ToArray());
+
             repoService.DeleteReposAsync(idsToDelete.ToArray());
-            // UpdateDataGrid();
         }
 
         private void repoDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
@@ -337,7 +386,6 @@ namespace GitHubRepoListWPFClient
                         MessageBox.Show(ex.Message, "Error saving new value", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     
-                    // string serializedRepo = new JavaScriptSerializer().Serialize(editedRepo);
                     repoService.EditRepoAsync(new JavaScriptSerializer().Serialize(editedRepo));
                 }
             }
@@ -396,10 +444,15 @@ namespace GitHubRepoListWPFClient
                         MessageBox.Show(ex.Message, "Error saving new value", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
 
-                    //string serializedUser = new JavaScriptSerializer().Serialize(editedUser);
                     repoService.EditUserAsync(new JavaScriptSerializer().Serialize(editedUser));
                 }
             }
+        }
+
+        private void repoDataGrid_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+                deleteSelectedMenuItem_Click(sender, e);
         }
     }
 }

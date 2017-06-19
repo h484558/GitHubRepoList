@@ -1,17 +1,7 @@
 ﻿using GitHubRepoList.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GitHubRepoListWPFClient
 {
@@ -45,7 +35,7 @@ namespace GitHubRepoListWPFClient
 
         private void createRepoButton_Click(object sender, RoutedEventArgs e)
         {
-            NewRepo = new Repo { name = nameTextBox.Text, full_name = fullNameTextBox.Text, url = urlTextBox.Text, created_at = createdAtTextBox.Text };
+            NewRepo = new Repo { name = nameTextBox.Text, full_name = fullNameTextBox.Text, url = urlTextBox.Text, created_at = createdAtTextBox.Text, description = descriptionTextBox.Text };
             this.DialogResult = true;
         }
     }

@@ -35,8 +35,6 @@ namespace GitHubRepoListWPFClient.GitHubRepoListService {
         
         private System.Threading.SendOrPostCallback GetReposOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetRepoDetailsOperationCompleted;
-        
         private System.Threading.SendOrPostCallback CreateRepoOperationCompleted;
         
         private System.Threading.SendOrPostCallback CreateReposOperationCompleted;
@@ -103,9 +101,6 @@ namespace GitHubRepoListWPFClient.GitHubRepoListService {
         
         /// <remarks/>
         public event GetReposCompletedEventHandler GetReposCompleted;
-        
-        /// <remarks/>
-        public event GetRepoDetailsCompletedEventHandler GetRepoDetailsCompleted;
         
         /// <remarks/>
         public event CreateRepoCompletedEventHandler CreateRepoCompleted;
@@ -186,36 +181,6 @@ namespace GitHubRepoListWPFClient.GitHubRepoListService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapHeaderAttribute("AuthenticationHeaderValue")]
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://githubrepolist.org/GetRepoDetails", RequestNamespace="http://githubrepolist.org/", ResponseNamespace="http://githubrepolist.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string GetRepoDetails(int id) {
-            object[] results = this.Invoke("GetRepoDetails", new object[] {
-                        id});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetRepoDetailsAsync(int id) {
-            this.GetRepoDetailsAsync(id, null);
-        }
-        
-        /// <remarks/>
-        public void GetRepoDetailsAsync(int id, object userState) {
-            if ((this.GetRepoDetailsOperationCompleted == null)) {
-                this.GetRepoDetailsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetRepoDetailsOperationCompleted);
-            }
-            this.InvokeAsync("GetRepoDetails", new object[] {
-                        id}, this.GetRepoDetailsOperationCompleted, userState);
-        }
-        
-        private void OnGetRepoDetailsOperationCompleted(object arg) {
-            if ((this.GetRepoDetailsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetRepoDetailsCompleted(this, new GetRepoDetailsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapHeaderAttribute("AuthenticationHeaderValue")]
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://githubrepolist.org/CreateRepo", RequestNamespace="http://githubrepolist.org/", ResponseNamespace="http://githubrepolist.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public string CreateRepo(string newRepoJson) {
             object[] results = this.Invoke("CreateRepo", new object[] {
@@ -247,24 +212,24 @@ namespace GitHubRepoListWPFClient.GitHubRepoListService {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapHeaderAttribute("AuthenticationHeaderValue")]
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://githubrepolist.org/CreateRepos", RequestNamespace="http://githubrepolist.org/", ResponseNamespace="http://githubrepolist.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string CreateRepos(string newRepoJson) {
+        public string CreateRepos(string newReposJson) {
             object[] results = this.Invoke("CreateRepos", new object[] {
-                        newRepoJson});
+                        newReposJson});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void CreateReposAsync(string newRepoJson) {
-            this.CreateReposAsync(newRepoJson, null);
+        public void CreateReposAsync(string newReposJson) {
+            this.CreateReposAsync(newReposJson, null);
         }
         
         /// <remarks/>
-        public void CreateReposAsync(string newRepoJson, object userState) {
+        public void CreateReposAsync(string newReposJson, object userState) {
             if ((this.CreateReposOperationCompleted == null)) {
                 this.CreateReposOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCreateReposOperationCompleted);
             }
             this.InvokeAsync("CreateRepos", new object[] {
-                        newRepoJson}, this.CreateReposOperationCompleted, userState);
+                        newReposJson}, this.CreateReposOperationCompleted, userState);
         }
         
         private void OnCreateReposOperationCompleted(object arg) {
@@ -527,32 +492,6 @@ namespace GitHubRepoListWPFClient.GitHubRepoListService {
         private object[] results;
         
         internal GetReposCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
-    public delegate void GetRepoDetailsCompletedEventHandler(object sender, GetRepoDetailsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetRepoDetailsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetRepoDetailsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

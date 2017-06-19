@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using System.Web.Script.Serialization;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GitHubRepoListWPFClient
 {
@@ -33,17 +23,27 @@ namespace GitHubRepoListWPFClient
 
         private void RepoService_AuthenticateCompleted(object sender, GitHubRepoListService.AuthenticateCompletedEventArgs e)
         {
-            if (e.Result == string.Empty)
+            try
+            {
+                if (e.Result == string.Empty)
+                {
+                    signInButton.Content = "Sign in";
+                    signInButton.IsEnabled = true;
+                    this.Cursor = Cursors.Arrow;
+                    MessageBox.Show("Please check your authentication credentials!", "Login failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    AuthDetails = new JavaScriptSerializer().Deserialize<AuthenticationDetails>(e.Result);
+                    this.DialogResult = true;
+                }
+            }
+            catch (TargetInvocationException)
             {
                 signInButton.Content = "Sign in";
                 signInButton.IsEnabled = true;
                 this.Cursor = Cursors.Arrow;
-                MessageBox.Show("Please check your authentication credentials!", "Login failed", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                AuthDetails = new JavaScriptSerializer().Deserialize<AuthenticationDetails>(e.Result);
-                this.DialogResult = true;
+                MessageBox.Show("Connection lost! Please try again later.", "Connection lost", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

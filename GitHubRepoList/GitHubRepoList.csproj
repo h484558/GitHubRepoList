@@ -124,6 +124,10 @@
     <Content Include="Scripts\ngDialog.min.js" />
     <Content Include="Scripts\snippets.js" />
     <Content Include="Scripts\sortable.js" />
+    <Content Include="Sql\Create_sp_RepoCrud.sql" />
+    <Content Include="Sql\Create_sp_UserOps.sql" />
+    <Content Include="Sql\Drop_sp_RepoCrud.sql" />
+    <Content Include="Sql\Drop_sp_UserOps.sql" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -139,15 +143,32 @@
     <Compile Include="Controllers\WriteRightsRequiredAttribute.cs" />
     <Compile Include="GitHubRepoListService.asmx.cs">
       <DependentUpon>GitHubRepoListService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706150901369_add_sp_RepoCrud.cs" />
+    <Compile Include="Migrations\201706150901369_add_sp_RepoCrud.Designer.cs">
+      <DependentUpon>201706150901369_add_sp_RepoCrud.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706161406397_add_sp_UserOps.cs" />
+    <Compile Include="Migrations\201706161406397_add_sp_UserOps.Designer.cs">
+      <DependentUpon>201706161406397_add_sp_UserOps.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Repo.cs" />
     <Compile Include="Models\RepoOwner.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AuthenticationHeader.cs" />
+    <Compile Include="Services\RepoService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -170,6 +191,18 @@
   <ItemGroup>
     <Folder Include="Views\Repo\" />
     <Folder Include="Views\User\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201706150901369_add_sp_RepoCrud.resx">
+      <DependentUpon>201706150901369_add_sp_RepoCrud.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706161406397_add_sp_UserOps.resx">
+      <DependentUpon>201706161406397_add_sp_UserOps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
