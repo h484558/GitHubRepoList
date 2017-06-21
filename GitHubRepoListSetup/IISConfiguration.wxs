@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+	<Fragment>
+    <DirectoryRef Id="INETPUB_INSTALLFOLDER">
+      <Component Id="GHRLAppPool" Guid="" KeyPath="yes">
+        <iis:WebAppPool Id="GHRLAppPool" Name="GitHubRepoList Website" Identity="applicationPoolIdentity" ManagedPipelineMode="Integrated" ManagedRuntimeVersion="v4.0" />
+      </Component>
+
+      <Component Id="InstallWebsite" Guid="" KeyPath="yes">
+        <iis:WebSite Id="GHRLWebsiteWebsite" Description='GitHubRepoList Website' Directory='INETPUB_INSTALLFOLDER' AutoStart='yes' StartOnInstall='yes'>
+          <iis:WebAddress Id="AllUnassigned" Port="80" />
+          <iis:WebApplication Id="GHRLWebsiteApplication" Name="[GHRLWebsiteWebsite][WEBSITE_ID]" WebAppPool="GHRLAppPool"></iis:WebApplication>
+        </iis:WebSite>
+      </Component>
+    </DirectoryRef>
+
+    <ComponentGroup Id="GHRLIISConfiguration">
+      <ComponentRef Id="InstallWebsite" />
+      <ComponentRef Id="GHRLAppPool" />
+    </ComponentGroup>
+	</Fragment>
+</Wix>

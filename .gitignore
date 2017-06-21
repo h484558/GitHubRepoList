@@ -242,3 +242,11 @@ ModelManifest.xml
 .fake/
 
 log.txt
+
+# Setup files
+Setup/
+
+# Redist files
+Redist/
+
+*.wixobj

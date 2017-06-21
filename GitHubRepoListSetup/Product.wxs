@@ -1,33 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="GitHubRepoListSetup" Language="1033" Version="1.0.0.0" Manufacturer="______" UpgradeCode="d69b3c35-983a-4d30-a0a9-cab452dbe2da">
+	<Product Id="*" Name="GitHubRepoList" Language="1033" Version="1.0.0.0" Manufacturer="Dmytro Stadnyk" UpgradeCode="d69b3c35-983a-4d30-a0a9-cab452dbe2da">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+		<MediaTemplate EmbedCab="yes" />
 
 		<Feature Id="ProductFeature" Title="GitHubRepoListSetup" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="GHRLWPFComponents" />
+      <ComponentGroupRef Id="GHRLWebComponents" />
+      <ComponentGroupRef Id="GHRLIISConfiguration" />
 		</Feature>
-	</Product>
+    
+    <!--UI-->
+    <UIRef Id="InstallUI" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INETPUB" />
+    
+    <!--DB-->
+    <Property Id="DB_USER" Value="root"/>
+    <Property Id="DB_PASSWORD" Value="root"/>
+    <Property Id="DB_SERVER" Value="LOCAL"/>
+    <Property Id="DB_DATABASE" Value="RepoDB"/>
+    
+    <!--.NET Framework 4.5.2 Install-->
+    <Binary Id="Net452RedistributableBinary" SourceFile="..\Redist\NDP452-KB2901907-x86-x64-AllOS-ENU.exe" />
+    <CustomAction Id="InstallNet452" BinaryKey="Net452RedistributableBinary" Impersonate="no" ExeCommand="" Execute="deferred" Return="asyncNoWait" />
+    <InstallExecuteSequence>
+      <Custom Action="InstallNet452" After="InstallFiles" />
+    </InstallExecuteSequence>
+  </Product>
 
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="GitHubRepoListSetup" />
+			<Directory Id="INETPUB" Name="Inetpub">
+        <Directory Id="INETPUB_INSTALLFOLDER" Name="GitHubRepoListWebService">
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramFilesFolder">
+				<Directory Id="WPFCLIENT_INSTALLFOLDER" Name="GitHubRepoListSetupWPFClient" />
 			</Directory>
 		</Directory>
-	</Fragment>
-
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			 <Component Id="WebService"> 
-         <File Source="$(var.GitHubRepoList.TargetPath)" />
-			 </Component>
-      <Component Id="WPFClient">
-        <File Source="$(var.GitHubRepoListWPFClient.TargetPath)" />
-      </Component>
-    </ComponentGroup>
 	</Fragment>
 </Wix>
