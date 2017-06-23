@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Fragment>
+    <DirectoryRef Id="WPFCLIENT_INSTALLFOLDER">
+      <Component Id="WpfClientConfigUpdaterComponent" Guid="" KeyPath="yes">
+        <util:XmlFile Id="AppConfig"
+                      Action="setValue"
+                      File="[WPFCLIENT_INSTALLFOLDER]GitHubRepoListWPFClient.exe.config"
+                      ElementPath="//configuration/applicationSettings/GitHubRepoListWPFClient.Properties.Settings/setting[\[]@name='GitHubRepoListWPFClient_localhost_GitHubRepoListService'[\]]/value"
+                      Value="[WEB_URL]GitHubRepoListService.asmx" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

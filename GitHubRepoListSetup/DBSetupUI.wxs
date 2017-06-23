@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Fragment>
     <UI>
-      <Dialog Id="DBSetupDlg"  Width="370" Height="270" Title="Database settings" NoMinimize="yes">
+      <Dialog Id="DBSetupDlg"  Width="370" Height="270" Title="Database Settings" NoMinimize="yes">
         <Control Id="ServerNameLabel" Type="Text" X="45" Y="41" Width="220" Height="15" TabSkip="no" Text="Database server name or IP" />
         <Control Id="ServerNameEdit" Type="Edit" X="45" Y="53" Width="220" Height="18" Property="DB_SERVER" Text="{80}" />
         <Control Id="DatabaseNameLabel" Type="Text" X="45" Y="73" Width="220" Height="15" TabSkip="no" Text="Database name" />

@@ -9,7 +9,7 @@
 
       <Component Id="InstallWebsite" Guid="" KeyPath="yes">
         <iis:WebSite Id="GHRLWebsiteWebsite" Description='GitHubRepoList Website' Directory='INETPUB_INSTALLFOLDER' AutoStart='yes' StartOnInstall='yes'>
-          <iis:WebAddress Id="AllUnassigned" Port="80" />
+          <iis:WebAddress Id="AllUnassigned" Port="59130" />
           <iis:WebApplication Id="GHRLWebsiteApplication" Name="[GHRLWebsiteWebsite][WEBSITE_ID]" WebAppPool="GHRLAppPool"></iis:WebApplication>
         </iis:WebSite>
       </Component>

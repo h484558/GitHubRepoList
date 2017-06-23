@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+         xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+         xmlns:sql="http://schemas.microsoft.com/wix/SqlExtension">
+	<Fragment>
+    <util:User Id="SQLUser" Name="[DB_USER]" Password="[DB_PASSWORD]" />
+
+    <DirectoryRef Id="INETPUB_INSTALLFOLDER">
+      <Component Id="SQLComponent" Guid="" KeyPath="yes">
+        <sql:SqlDatabase Id="RepoDB" Database="[DB_DATABASE]" Server="[DB_SERVER]" CreateOnInstall="yes" DropOnUninstall="yes" User="SQLUser" ContinueOnError="no"></sql:SqlDatabase>
+      </Component>
+    </DirectoryRef>
+	</Fragment>
+</Wix>

@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 	<Product Id="*" Name="GitHubRepoList" Language="1033" Version="1.0.0.0" Manufacturer="Dmytro Stadnyk" UpgradeCode="d69b3c35-983a-4d30-a0a9-cab452dbe2da">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate EmbedCab="yes" />
 
-		<Feature Id="ProductFeature" Title="GitHubRepoListSetup" Level="1">
-      <ComponentGroupRef Id="GHRLWPFComponents" />
+		<Feature Id="WebComponentFeature" Title="Web Component" Level="1" AllowAdvertise="no">
       <ComponentGroupRef Id="GHRLWebComponents" />
       <ComponentGroupRef Id="GHRLIISConfiguration" />
+      <ComponentRef Id="WebConfigUpdaterComponent" />
+      <ComponentRef Id="WebShortcut" />
+      <ComponentRef Id="CleanShortcuts" />
 		</Feature>
+
+    <Feature Id="WPFComponentFeature" Title="WPF Client Component" Level="1" AllowAdvertise="no">
+      <ComponentGroupRef Id="GHRLWPFComponents" />
+      <ComponentRef Id="WpfClientConfigUpdaterComponent" />
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="CleanShortcuts" />
+    </Feature>
+
+    <Feature Id="SQLComponentFeature" Title="DB Component" Level="1" AllowAdvertise="no">
+      <ComponentRef Id="SQLComponent" />
+    </Feature>
     
     <!--UI-->
     <UIRef Id="InstallUI" />
-    <Property Id="WIXUI_INSTALLDIR" Value="INETPUB" />
+    <Property Id="WIXUI_INSTALLDIR" Value="WPFCLIENT_INSTALLFOLDER" />
     
     <!--DB-->
-    <Property Id="DB_USER" Value="root"/>
-    <Property Id="DB_PASSWORD" Value="root"/>
-    <Property Id="DB_SERVER" Value="LOCAL"/>
-    <Property Id="DB_DATABASE" Value="RepoDB"/>
+    <Property Id="DB_USER" Value="admin"/>
+    <Property Id="DB_PASSWORD" Value="admin"/>
+    <Property Id="DB_SERVER" Value=".\SQLEXPRESS"/>
+    <Property Id="DB_DATABASE" Value="repodb"/>
     
-    <!--.NET Framework 4.5.2 Install-->
-    <Binary Id="Net452RedistributableBinary" SourceFile="..\Redist\NDP452-KB2901907-x86-x64-AllOS-ENU.exe" />
-    <CustomAction Id="InstallNet452" BinaryKey="Net452RedistributableBinary" Impersonate="no" ExeCommand="" Execute="deferred" Return="asyncNoWait" />
-    <InstallExecuteSequence>
-      <Custom Action="InstallNet452" After="InstallFiles" />
-    </InstallExecuteSequence>
+    <!--Web Interface and Service URL-->
+    <Property Id="WEB_URL" Value="http://localhost:59130/"/>
   </Product>
 
 	<Fragment>
@@ -36,9 +45,64 @@
         <Directory Id="INETPUB_INSTALLFOLDER" Name="GitHubRepoListWebService">
         </Directory>
       </Directory>
+      
       <Directory Id="ProgramFilesFolder">
 				<Directory Id="WPFCLIENT_INSTALLFOLDER" Name="GitHubRepoListSetupWPFClient" />
 			</Directory>
+
+      <!--Create shortcut-->
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <!--WPF Client shortcut-->
+        <Component Id="ApplicationShortcut" Guid="{76C55264-85E8-4AC2-80AA-EC2FE12DE36B}">
+          <Shortcut Id="WPFComponentDesktopShortcut"
+                    Name="GHRL Client"
+                    Description="GitHub Repo List WPF Client"
+                    Target="[WPFCLIENT_INSTALLFOLDER]GitHubRepoListWPFClient.exe"
+                    WorkingDirectory="WPFCLIENT_INSTALLFOLDER">
+            <Icon Id="ApplicationIcon" SourceFile="..\GitHubRepoListWPFClient\GitHub-Mark-120px-plus.ico" />
+          </Shortcut>
+          <RegistryValue
+                Root="HKCU"
+                Key="Software/GHRLClient"
+                Name="installed"
+                Type="integer"
+                Value="1"
+                KeyPath="yes"/>
+        </Component>
+
+        <!--Web Shortcut-->
+        <Component Id="WebShortcut" Guid="{FF039214-1D9A-4A89-9032-FF9A2A01A8A6}">
+          <util:InternetShortcut Id="WebInterfaceShortcut"
+                        Name="GHRL Web Interface"
+                               Target="http://localhost:59130/"/>
+          <RegistryValue
+                Root="HKCU"
+                Key="Software/GHRLWebInterfaceAndService"
+                Name="installed"
+                Type="integer"
+                Value="1"
+                KeyPath="yes"/>
+        </Component>
+
+        <!--Clean all shortcuts on uninstall-->
+        <Component Id="CleanShortcuts" Guid="{F6112491-E4DC-4324-8BED-6B0655BE95DC}">
+          <RemoveFolder Id="DesktopFolder" On="uninstall" />
+          <RegistryValue
+                Root="HKCU"
+                Key="Software/GHRLClient"
+                Name="installed"
+                Type="integer"
+                Value="0"
+                KeyPath="no"/>
+          <RegistryValue
+                Root="HKCU"
+                Key="Software/GHRLWebInterfaceAndService"
+                Name="installed"
+                Type="integer"
+                Value="0"
+                KeyPath="yes"/>
+        </Component>
+      </Directory>
 		</Directory>
 	</Fragment>
 </Wix>

@@ -107,9 +107,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="GitHubRepoListService.asmx" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\angular-cookies.min.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery%401,jquery.ui%401.10%28jquery.ui.core.min.js+jquery.ui.widget.min.js+jquery.ui.mouse.min.js+jquery.ui.sortable.min.js" />
     <Content Include="Scripts\other.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -118,6 +121,7 @@
     <Content Include="Scripts\ngDialog.min.js" />
     <Content Include="Scripts\snippets.js" />
     <Content Include="Scripts\sortable.js" />
+    <Content Include="Scripts\ui.sortable.multiselection.js" />
     <Content Include="Sql\Create_sp_RepoCrud.sql" />
     <Content Include="Sql\Create_sp_UserOps.sql" />
     <Content Include="Sql\Drop_sp_RepoCrud.sql" />
@@ -202,6 +206,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

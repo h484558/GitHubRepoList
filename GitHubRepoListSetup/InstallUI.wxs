@@ -61,9 +61,15 @@ Patch dialog sequence:
             <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
 
             <Publish Dialog="DBSetupDlg" Control="Back" Event="NewDialog" Value="InstallDirDlg"></Publish>
-            <Publish Dialog="DBSetupDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg"></Publish>
+            <Publish Dialog="DBSetupDlg" Control="Next" Event="NewDialog" Value="WebUrlDlg"></Publish>
+
+            <Publish Dialog="WebUrlDlg" Control="Back" Event="NewDialog" Value="DBSetupDlg"></Publish>
+            <Publish Dialog="WebUrlDlg" Control="Next" Event="NewDialog" Value="FeaturesDlg"></Publish>
+          
+
+            <Publish Dialog="FeaturesDlg" Control="Back" Event="NewDialog" Value="WebUrlDlg"></Publish>
             
-            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="DBSetupDlg" Order="1">NOT Installed</Publish>
+            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="FeaturesDlg" Order="1">NOT Installed</Publish>
             <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed AND NOT PATCH</Publish>
             <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">Installed AND PATCH</Publish>
 

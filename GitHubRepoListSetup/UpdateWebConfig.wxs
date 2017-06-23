@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<Fragment>
+    <DirectoryRef Id="INETPUB_INSTALLFOLDER">
+      <Component Id="WebConfigUpdaterComponent" Guid="" KeyPath="yes">
+        <util:XmlFile Id="WebConfig"
+                      Action="setValue"
+                      File="[INETPUB_INSTALLFOLDER]Web.config"
+                      ElementPath="//configuration/connectionStrings/add"
+                      Name="connectionString"
+                      Value="Data Source=[DB_SERVER];Initial Catalog='[DB_DATABASE]';Integrated Security=True" />
+      </Component>
+    </DirectoryRef>
+	</Fragment>
+</Wix>
