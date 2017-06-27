@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GitHubRepoListWPFClient"
         mc:Ignorable="d"
-        Title="GitHubRepoList" Icon="GitHub-Mark-120px-plus.ico" d:DesignWidth="1400" d:DesignHeight="700" MinHeight="700" MinWidth="1400">
+        Title="GitHubRepoList" Icon="Git-Icon-Black.ico" d:DesignWidth="1400" d:DesignHeight="700" MinHeight="700" MinWidth="1400">
     <DockPanel>
         <Menu x:Name="menu" DockPanel.Dock="Top">
             <MenuItem x:Name="accountMenuItem" Header="Account">

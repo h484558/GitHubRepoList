@@ -7,7 +7,7 @@
 
     <DirectoryRef Id="INETPUB_INSTALLFOLDER">
       <Component Id="SQLComponent" Guid="" KeyPath="yes">
-        <sql:SqlDatabase Id="RepoDB" Database="[DB_DATABASE]" Server="[DB_SERVER]" CreateOnInstall="yes" DropOnUninstall="yes" User="SQLUser" ContinueOnError="no"></sql:SqlDatabase>
+        <sql:SqlDatabase Id="RepoDB" Database="[DB_DATABASE]" Server="[DB_SERVER]" CreateOnInstall="yes" User="SQLUser" ContinueOnError="no"></sql:SqlDatabase>
       </Component>
     </DirectoryRef>
 	</Fragment>

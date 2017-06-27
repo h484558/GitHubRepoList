@@ -24,6 +24,7 @@
     <WixCode Include="InstallUI.wxs" />
     <WixCode Include="DBSetupUI.wxs" />
     <WixCode Include="IISConfiguration.wxs" />
+    <WixCode Include="IISConfigurationUI.wxs" />
     <WixCode Include="Database.wxs" />
     <WixCode Include="UpdateWebConfig.wxs" />
     <WixCode Include="WebInterfaceServiceUrlUI.wxs" />
@@ -38,6 +39,7 @@
     <WixObject Include="InstallUI.wixobj" />
     <WixObject Include="DBSetupUI.wixobj" />
     <WixObject Include="IISConfiguration.wixobj" />
+    <WixObject Include="IISConfigurationUI.wixobj" />
     <WixObject Include="Database.wixobj" />
     <WixObject Include="UpdateWebConfig.wixobj" />
     <WixObject Include="WebInterfaceServiceUrlUI.wixobj" />

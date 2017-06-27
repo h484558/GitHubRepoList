@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <UI>
+      <Dialog Id="IISConfigDlg"  Width="370" Height="270" Title="IIS Application Configuration" NoMinimize="yes">
+        <Control Id="AppPoolLabel" Type="Text" X="45" Y="41" Width="220" Height="15" TabSkip="no" Text="Application Pool" />
+        <Control Id="AppPoolNameEdit" Type="Edit" X="45" Y="53" Width="220" Height="18" Property="APP_POOL" Text="{80}" />
+        <Control Id="AppNameLabel" Type="Text" X="45" Y="73" Width="220" Height="15" TabSkip="no" Text="Application Name" />
+        <Control Id="AppNameEdit" Type="Edit" X="45" Y="85" Width="220" Height="18" Property="APP_NAME" Text="{80}" />
+        <Control Id="PortLabel" Type="Text" X="45" Y="105" Width="220" Height="15" TabSkip="no" Text="Application Port" />
+        <Control Id="PortEdit" Type="Edit" X="45" Y="117" Width="220" Height="18" Property="APP_PORT" Text="{80}" />
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="Back"></Control>
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="Next"></Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+      </Dialog>
+    </UI>
+  </Fragment>
+</Wix>

@@ -2,8 +2,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Fragment>
     <UI>
-      <Dialog Id="WebUrlDlg"  Width="370" Height="270" Title="Web Interface And Service URL" NoMinimize="yes">
-        <Control Id="ServerNameLabel" Type="Text" X="45" Y="41" Width="220" Height="15" TabSkip="no" Text="Web Interface And Service URL" />
+      <Dialog Id="WebUrlDlg"  Width="370" Height="270" Title="GHRL Client Configuration" NoMinimize="yes">
+        <Control Id="ServerNameLabel" Type="Text" X="45" Y="41" Width="220" Height="15" TabSkip="no" Text="GHRL Web Interface And Service URL" />
         <Control Id="ServerNameEdit" Type="Edit" X="45" Y="53" Width="220" Height="18" Property="WEB_URL" Text="{80}" />
         <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="Back"></Control>
         <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="Next"></Control>

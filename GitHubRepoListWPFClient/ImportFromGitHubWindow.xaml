@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GitHubRepoListWPFClient"
         mc:Ignorable="d"
-        Title="Import From GitHub" Height="120" Width="315" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" Icon="GitHub-Mark-120px-plus.ico">
+        Title="Import From GitHub" Height="120" Width="315" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" Icon="Git-Icon-Black.ico">
     <Grid FocusManager.FocusedElement="{Binding ElementName=gitHubUsernameTextBox}">
         <Label x:Name="label" Content="http://github.com/" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="gitHubUsernameTextBox" HorizontalAlignment="Left" Height="23" Margin="127,14,0,0" TextWrapping="Wrap" Text="google" VerticalAlignment="Top" Width="155"/>

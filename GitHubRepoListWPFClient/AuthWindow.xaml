@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GitHubRepoListWPFClient"
         mc:Ignorable="d"
-        Title="Authentication Required" Height="150" Width="300" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterScreen" Icon="GitHub-Mark-120px-plus.ico">
+        Title="Authentication Required" Height="150" Width="300" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterScreen" Icon="Git-Icon-Black.ico">
     <Grid FocusManager.FocusedElement="{Binding ElementName=authLoginTextBox}">
         <Label x:Name="label1" Content="Login:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="authLoginTextBox" Height="23" Margin="81,10,0,0" TextWrapping="Wrap" Text="guest" VerticalAlignment="Top" HorizontalAlignment="Left" Width="190" GotFocus="authLoginTextBox_GotFocus" GotKeyboardFocus="authLoginTextBox_GotKeyboardFocus" GotMouseCapture="authLoginTextBox_GotMouseCapture"/>

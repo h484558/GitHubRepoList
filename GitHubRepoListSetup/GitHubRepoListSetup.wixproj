@@ -22,6 +22,7 @@
     <Compile Include="Database.wxs" />
     <Compile Include="DBSetupUI.wxs" />
     <Compile Include="IISConfiguration.wxs" />
+    <Compile Include="IISConfigurationUI.wxs" />
     <Compile Include="Product.wxs" />
     <Compile Include="UpdateWebConfig.wxs" />
     <Compile Include="UpdateWPFClientConfig.wxs" />

@@ -71,18 +71,27 @@ Patch dialog sequence:
 
             <Publish Dialog="DBSetupDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="1"><![CDATA[&SQLComponentFeature = 3 OR &WebComponentFeature = 3]]></Publish>  
             <Publish Dialog="DBSetupDlg" Control="Back" Event="NewDialog" Value="InstallDirDlg" Order="2"><![CDATA[&WPFComponentFeature = 3]]></Publish>
-            <Publish Dialog="DBSetupDlg" Control="Next" Event="DoAction" Value="ValidateSqlConnection" Order="1">1</Publish>
+            <Publish Dialog="DBSetupDlg" Control="Next" Event="DoAction" Value="ValidateSqlConnectionClient" Order="1"><![CDATA[&WebComponentFeature = 3 AND &SQLComponentFeature <> 3]]></Publish>
+            <Publish Dialog="DBSetupDlg" Control="Next" Event="DoAction" Value="ValidateSqlConnectionServer" Order="1"><![CDATA[&SQLComponentFeature = 3]]></Publish>
             <Publish Dialog="DBSetupDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="2"><![CDATA[(&SQLComponentFeature = 3 OR &WebComponentFeature = 3) AND DB_CONNECTION_SUCCESS = "1"]]></Publish>
             <Publish Dialog="DBSetupDlg" Control="Next" Event="NewDialog" Value="WebUrlDlg" Order="3"><![CDATA[&WPFComponentFeature = 3 AND DB_CONNECTION_SUCCESS = "1"]]></Publish>
-            
+            <Publish Dialog="DBSetupDlg" Control="Next" Event="NewDialog" Value="IISConfigDlg" Order="4"><![CDATA[&WebComponentFeature = 3 AND DB_CONNECTION_SUCCESS = "1"]]></Publish>
+
+            <Publish Dialog="IISConfigDlg" Control="Back" Event="NewDialog" Value="InstallDirDlg" Order="1"><![CDATA[&WPFComponentFeature = 3]]></Publish>
+            <Publish Dialog="IISConfigDlg" Control="Back" Event="NewDialog" Value="DBSetupDlg" Order="2"><![CDATA[&SQLComponentFeature = 3 OR &WebComponentFeature = 3]]></Publish>
+            <Publish Dialog="IISConfigDlg" Control="Next" Event="DoAction" Value="ValidateIISConfiguration" Order="1">1</Publish>
+            <Publish Dialog="IISConfigDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="2">IIS_CONFIGURATION_SUCCESS = "1"</Publish>
+            <Publish Dialog="IISConfigDlg" Control="Next" Event="NewDialog" Value="WebUrlDlg" Order="3"><![CDATA[&WPFComponentFeature = 3 AND IIS_CONFIGURATION_SUCCESS = "1"]]></Publish>
 
             <Publish Dialog="WebUrlDlg" Control="Back" Event="NewDialog" Value="InstallDirDlg" Order="1"><![CDATA[&WPFComponentFeature = 3]]></Publish>
-            <Publish Dialog="WebUrlDlg" Control="Back" Event="NewDialog" Value="DBSetupDlg" Order="2"><![CDATA[&SQLComponentFeature = 3 OR &WebComponentFeature = 3]]></Publish>
-            <Publish Dialog="WebUrlDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg"></Publish>
+            <Publish Dialog="WebUrlDlg" Control="Back" Event="NewDialog" Value="IISConfigDlg" Order="2"><![CDATA[&SQLComponentFeature = 3 OR &WebComponentFeature = 3]]></Publish>
+            <Publish Dialog="WebUrlDlg" Control="Next" Event="DoAction" Value="ValidateWebServiceUrl" Order="1">1</Publish>
+            <Publish Dialog="WebUrlDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="2">SERVICE_CONNECTION_SUCCESS = "1"</Publish>
             
             <!--<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WebUrlDlg" Order="1">NOT Installed</Publish>-->
-            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="DBSetupDlg" Order="1"><![CDATA[(&SQLComponentFeature = 3 OR &WebComponentFeature = 3) AND NOT Installed]]></Publish>  
-            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WebUrlDlg" Order="2"><![CDATA[&WPFComponentFeature = 3 AND NOT Installed]]></Publish>
+            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="DBSetupDlg" Order="1"><![CDATA[(&SQLComponentFeature = 3) AND NOT Installed]]></Publish>
+            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="IISConfigDlg" Order="2"><![CDATA[(&WebComponentFeature = 3) AND NOT Installed]]></Publish>
+            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WebUrlDlg" Order="3"><![CDATA[&WPFComponentFeature = 3 AND NOT Installed]]></Publish>
             <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="3">Installed AND NOT PATCH</Publish>
             <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="3">Installed AND PATCH</Publish>
 
