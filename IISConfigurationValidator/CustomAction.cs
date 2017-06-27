@@ -38,9 +38,9 @@ namespace IISConfigurationValidator
             {
                 port = int.Parse(session["APP_PORT"]);
             }
-            catch (FormatException)
+            catch (Exception)
             {
-                MessageBox.Show("Port '" + port + "' is currently in use!", "Invalid IIS Configuration", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid port value: '" + session["APP_PORT"] + "'!", "Invalid IIS Configuration", MessageBoxButton.OK, MessageBoxImage.Error);
                 session["IIS_CONFIGURATION_SUCCESS"] = "0";
                 return ActionResult.Success;
             }
