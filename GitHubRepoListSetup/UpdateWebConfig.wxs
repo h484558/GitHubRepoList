@@ -8,7 +8,7 @@
                       File="[INETPUB_INSTALLFOLDER]Web.config"
                       ElementPath="//configuration/connectionStrings/add"
                       Name="connectionString"
-                      Value="Data Source=[DB_SERVER];Initial Catalog='[DB_DATABASE]';Integrated Security=True" />
+                      Value="Data Source=[DB_SERVER];Network Library=DBMSSOCN;Initial Catalog='[DB_DATABASE]';User ID=[DB_USER];Password=[DB_PASSWORD];" />
       </Component>
     </DirectoryRef>
 	</Fragment>

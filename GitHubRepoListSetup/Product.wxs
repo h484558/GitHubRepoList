@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" xmlns:sql="http://schemas.microsoft.com/wix/SqlExtension">
 	<Product Id="*" Name="GitHubRepoList" Language="1033" Version="1.0.0.0" Manufacturer="Dmytro Stadnyk" UpgradeCode="d69b3c35-983a-4d30-a0a9-cab452dbe2da">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate EmbedCab="yes" />
+
+    <Binary Id="SQLConnectionValidator.CA.dll" SourceFile="..\SQLConnectionValidator\bin\Release\SQLConnectionValidator.CA.dll" />
 
 		<Feature Id="WebComponentFeature" Title="Web Component" Level="1" AllowAdvertise="no">
       <ComponentGroupRef Id="GHRLWebComponents" />
@@ -32,11 +34,22 @@
     <!--DB-->
     <Property Id="DB_USER" Value="admin"/>
     <Property Id="DB_PASSWORD" Value="admin"/>
-    <Property Id="DB_SERVER" Value=".\SQLEXPRESS"/>
+    <Property Id="DB_SERVER" Value="localhost"/>
     <Property Id="DB_DATABASE" Value="repodb"/>
     
     <!--Web Interface and Service URL-->
     <Property Id="WEB_URL" Value="http://localhost:59130/"/>
+
+    <!--DB Connection Validation-->
+    <Property Id="DB_CONNECTION_SUCCESS" Value="0" />
+    <CustomAction Id="ValidateSqlConnection" Return="check" Execute="immediate" BinaryKey="SQLConnectionValidator.CA.dll" DllEntry="ValidateSqlConnection" />
+
+    <!--Show "Launch GHRLClient" at the end screen-->
+    <!--<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch GHRLClient" />-->
+    <CustomAction Id="LaunchApplication" Directory="WPFCLIENT_INSTALLFOLDER" ExeCommand="[WPFCLIENT_INSTALLFOLDER]GitHubRepoListWPFClient.exe" Execute="immediate" Return="asyncNoWait" />
+
+    <CustomAction Id="CA_Set_WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch GHRLClient" />
+    <CustomAction Id="CA_UnSet_WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="" />
   </Product>
 
 	<Fragment>
