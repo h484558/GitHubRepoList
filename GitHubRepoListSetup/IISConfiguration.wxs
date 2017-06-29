@@ -2,12 +2,12 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
 	<Fragment>
-    <DirectoryRef Id="INETPUB_INSTALLFOLDER">
-      <Component Id="GHRLAppPool" Guid="" KeyPath="yes">
+    <DirectoryRef Id="TARGETDIR">
+      <Component Id="GHRLAppPool" Guid="{A8EB7E1E-DC51-4B6B-B9D1-650ADA5C772B}" KeyPath="yes">
         <iis:WebAppPool Id="GHRLAppPool" Name="[APP_POOL]" Identity="applicationPoolIdentity" ManagedPipelineMode="Integrated" ManagedRuntimeVersion="v4.0" />
       </Component>
 
-      <Component Id="InstallWebsite" Guid="" KeyPath="yes">
+      <Component Id="InstallWebsite" Guid="{6F60A13C-2409-4C28-9446-FDDEDB261800}" KeyPath="yes">
         <iis:WebSite Id="GHRLWebsiteWebsite" Description='[APP_NAME]' Directory='INETPUB_INSTALLFOLDER' AutoStart='yes' StartOnInstall='yes'>
           <iis:WebAddress Id="AllUnassigned" Port="[APP_PORT]" />
           <iis:WebApplication Id="GHRLWebsiteApplication" Name="[APP_NAME]" WebAppPool="GHRLAppPool"></iis:WebApplication>

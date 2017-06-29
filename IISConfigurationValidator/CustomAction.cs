@@ -7,6 +7,7 @@ using System.Windows;
 using System.DirectoryServices;
 using System.Net.NetworkInformation;
 using System.Net;
+using Microsoft.Web.Administration;
 
 namespace IISConfigurationValidator
 {
@@ -17,15 +18,19 @@ namespace IISConfigurationValidator
         {
             session.Log("Begin ValidateIISConfiguration");
 
+            string appName = session["APP_NAME"];
+            string appPort = session["APP_PORT"];
+            string appPool = session["APP_POOL"];
+
             // Check app pool and app name
-            Regex appNameAndPoolRegex = new Regex(@"^\w+$");
-            if (!appNameAndPoolRegex.IsMatch(session["APP_POOL"]))
+            Regex appNameAndPoolRegex = new Regex(@"^\w[\w\s]+$");
+            if (!appNameAndPoolRegex.IsMatch(appPool))
             {
                 MessageBox.Show("Invalid Application Pool!", "Invalid IIS Configuration", MessageBoxButton.OK, MessageBoxImage.Error);
                 session["IIS_CONFIGURATION_SUCCESS"] = "0";
                 return ActionResult.Success;
             }
-            else if (!appNameAndPoolRegex.IsMatch(session["APP_NAME"]))
+            else if (!appNameAndPoolRegex.IsMatch(appName))
             {
                 MessageBox.Show("Invalid Application Name!", "Invalid IIS Configuration", MessageBoxButton.OK, MessageBoxImage.Error);
                 session["IIS_CONFIGURATION_SUCCESS"] = "0";
@@ -36,11 +41,11 @@ namespace IISConfigurationValidator
 
             try
             {
-                port = int.Parse(session["APP_PORT"]);
+                port = int.Parse(appPort);
             }
             catch (Exception)
             {
-                MessageBox.Show("Invalid port value: '" + session["APP_PORT"] + "'!", "Invalid IIS Configuration", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid port value: '" + appPort + "'!", "Invalid IIS Configuration", MessageBoxButton.OK, MessageBoxImage.Error);
                 session["IIS_CONFIGURATION_SUCCESS"] = "0";
                 return ActionResult.Success;
             }
@@ -58,6 +63,21 @@ namespace IISConfigurationValidator
                     return ActionResult.Success;
                 }
             }
+
+            // Check if there is no site with such name
+            var iisManager = new ServerManager();
+            SiteCollection sites = iisManager.Sites;
+
+            foreach (var site in sites)
+            {
+                if (site.Name == appName)
+                {
+                    MessageBox.Show("Site '" + appName + "' already exists! Please choose another site name.", "Invalid IIS Configuration", MessageBoxButton.OK, MessageBoxImage.Error);
+                    session["IIS_CONFIGURATION_SUCCESS"] = "0";
+                    return ActionResult.Success;
+                }
+            }
+
 
             session["IIS_CONFIGURATION_SUCCESS"] = "1";
             return ActionResult.Success;

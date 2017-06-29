@@ -5,7 +5,7 @@
 	<Fragment>
     <util:User Id="SQLUser" Name="[DB_USER]" Password="[DB_PASSWORD]" />
 
-    <DirectoryRef Id="INETPUB_INSTALLFOLDER">
+    <DirectoryRef Id="TARGETDIR">
       <Component Id="SQLComponent" Guid="" KeyPath="yes">
         <sql:SqlDatabase Id="RepoDB" Database="[DB_DATABASE]" Server="[DB_SERVER]" CreateOnInstall="yes" User="SQLUser" ContinueOnError="no"></sql:SqlDatabase>
       </Component>
