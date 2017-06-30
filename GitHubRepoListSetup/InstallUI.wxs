@@ -83,7 +83,7 @@ Patch dialog sequence:
             <!--<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WebUrlDlg" Order="1">NOT Installed</Publish>-->
             <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="DBSetupDlg" Order="1"><![CDATA[(&SQLComponentFeature = 3) AND NOT Installed]]></Publish>
             <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="IISConfigDlg" Order="2"><![CDATA[(&WebComponentFeature = 3) AND NOT Installed]]></Publish>
-            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WebUrlDlg" Order="3"><![CDATA[&WPFComponentFeature = 3 AND NOT Installed AND USE_WEBSERVICE_SETTINGS_FOR_CLIENT <> "1"]]></Publish>
+            <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WebUrlDlg" Order="3"><![CDATA[(&WPFComponentFeature = 3) AND (NOT Installed) AND (USE_WEBSERVICE_SETTINGS_FOR_CLIENT <> "1" OR &WebComponentFeature <> 3)]]></Publish>
             <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="3">Installed AND NOT PATCH</Publish>
             <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="3">Installed AND PATCH</Publish>
 
