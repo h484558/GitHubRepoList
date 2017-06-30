@@ -86,7 +86,8 @@ Patch dialog sequence:
             <Publish Dialog="WebUrlDlg" Control="Back" Event="NewDialog" Value="InstallDirDlg" Order="1"><![CDATA[&WPFComponentFeature = 3]]></Publish>
             <Publish Dialog="WebUrlDlg" Control="Back" Event="NewDialog" Value="DBSetupDlg" Order="2"><![CDATA[&SQLComponentFeature = 3]]></Publish>
             <Publish Dialog="WebUrlDlg" Control="Back" Event="NewDialog" Value="IISConfigDlg" Order="3"><![CDATA[&WebComponentFeature = 3]]></Publish>
-            <Publish Dialog="WebUrlDlg" Control="Next" Event="DoAction" Value="ValidateWebServiceUrl" Order="1">1</Publish>
+            <Publish Dialog="WebUrlDlg" Control="Next" Event="DoAction" Value="ValidateWebServiceUrl" Order="1"><![CDATA[&WebComponentFeature <> 3]]></Publish>
+            <Publish Dialog="WebUrlDlg" Control="Next" Event="DoAction" Value="ValidateLocalhostUrl" Order="1"><![CDATA[&WebComponentFeature = 3]]></Publish>
             <Publish Dialog="WebUrlDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="2">SERVICE_CONNECTION_SUCCESS = "1"</Publish>
             
             <!--<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WebUrlDlg" Order="1">NOT Installed</Publish>-->

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" xmlns:sql="http://schemas.microsoft.com/wix/SqlExtension">
 	<Product Id="*" Name="GitHubRepoList" Language="1033" Version="1.0.0.0" Manufacturer="Dmytro Stadnyk" UpgradeCode="d69b3c35-983a-4d30-a0a9-cab452dbe2da">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate EmbedCab="yes" />
@@ -9,6 +9,7 @@
     <Binary Id="SQLConnectionValidator.CA.dll" SourceFile="..\SQLConnectionValidator\bin\Release\SQLConnectionValidator.CA.dll" />
     <Binary Id="IISConfigurationValidator.CA.dll" SourceFile="..\IISConfigurationValidator\bin\Release\IISConfigurationValidator.CA.dll" />
     <Binary Id="WebServiceUrlValidator.CA.dll" SourceFile="..\WebServiceUrlValidator\bin\Release\WebServiceUrlValidator.CA.dll" />
+    <Binary Id="DBManager.CA.dll" SourceFile="..\DBManager\bin\Release\DBManager.CA.dll" />
 
 		<Feature Id="WebComponentFeature" Title="Web Component" Level="1" AllowAdvertise="no">
       <ComponentGroupRef Id="GHRLWebComponents" />
@@ -27,7 +28,8 @@
 
     <Feature Id="SQLComponentFeature" Title="DB Component" Level="1" AllowAdvertise="no">
       <ComponentRef Id="SQLComponent" />
-    </Feature>
+      <ComponentRef Id="SQLInfo" />
+    </Feature> 
     
     <!--UI-->
     <UIRef Id="InstallUI" />
@@ -57,6 +59,10 @@
     <CustomAction Id="ValidateIISConfiguration" Return="check" Execute="immediate" BinaryKey="IISConfigurationValidator.CA.dll" DllEntry="ValidateIISConfiguration" />
     
     <CustomAction Id="ValidateWebServiceUrl" Return="check" Execute="immediate" BinaryKey="WebServiceUrlValidator.CA.dll" DllEntry="ValidateWebServiceUrl" />
+    <CustomAction Id="ValidateLocalhostUrl" Return="check" Execute="immediate" BinaryKey="WebServiceUrlValidator.CA.dll" DllEntry="ValidateLocalhostUrl" />
+    
+    <CustomAction Id="DropDBOnUninstall" Return="check" Execute="immediate" BinaryKey="DBManager.CA.dll" DllEntry="DropDBOnUninstall" />
+    
 
     <!--Show "Launch GHRLClient" at the end screen-->
     <!--<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch GHRLClient" />-->
@@ -66,7 +72,21 @@
     <CustomAction Id="CA_UnSet_WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="" />
 
     <!--Web Interface shortcut-->
-    <SetProperty Id="URL" Value="http://localhost:59130/" Sequence="execute"  Before="CreateShortcuts" />
+    <SetProperty Id="URL" Value="http://localhost:[APP_PORT]/" Sequence="execute"  Before="CreateShortcuts" />
+    
+    <!--Drop DB on uninstall-->
+    
+    <Property Id="SQLCOMPONENT_INSTALLED_STATE" Secure="yes">
+      <RegistrySearch Id="SQLComponentInstalledStateRegistryEntry"
+                    Root="HKCU"
+                    Key="Software\GHRLSQLInfo"
+                    Name="installed"
+                    Type="raw" />
+    </Property>
+  
+    <InstallExecuteSequence>
+      <Custom Action="DropDBOnUninstall" Before="RemoveFiles">((NOT UPGRADINGPRODUCTCODE) AND (REMOVE="ALL")) AND (SQLCOMPONENT_INSTALLED_STATE = "1")</Custom>
+    </InstallExecuteSequence>
   </Product>
 
 	<Fragment>
@@ -79,6 +99,45 @@
       <Directory Id="ProgramFilesFolder">
 				<Directory Id="WPFCLIENT_INSTALLFOLDER" Name="GitHubRepoListSetupWPFClient" />
 			</Directory>
+      
+      <!--Save DB Info for future removal-->
+      <Component Id="SQLInfo" Guid="{AF874571-016C-4CC3-AF9C-EE1E8780FA61}">
+        <RegistryValue
+                Root="HKCU"
+                Key="Software\GHRLSQLInfo"
+                Name="installed"
+                Type="string"
+                Value="1"
+                KeyPath="yes"/>
+        <RegistryValue
+                Root="HKCU"
+                Key="Software\GHRLSQLInfo"
+                Name="DB_USER"
+                Type="string"
+                Value="[DB_USER]"
+                KeyPath="no"/>
+        <RegistryValue
+                  Root="HKCU"
+                  Key="Software\GHRLSQLInfo"
+                  Name="DB_PASSWORD"
+                  Type="string"
+                  Value="[DB_PASSWORD]"
+                  KeyPath="no"/>
+        <RegistryValue
+                  Root="HKCU"
+                  Key="Software\GHRLSQLInfo"
+                  Name="DB_SERVER"
+                  Type="string"
+                  Value="[DB_SERVER]"
+                  KeyPath="no"/>
+        <RegistryValue
+                  Root="HKCU"
+                  Key="Software\GHRLSQLInfo"
+                  Name="DB_DATABASE"
+                  Type="string"
+                  Value="[DB_DATABASE]"
+                  KeyPath="no"/>
+      </Component>
 
       <!--Create shortcut-->
       <Directory Id="DesktopFolder" Name="Desktop">
@@ -93,9 +152,9 @@
           </Shortcut>
           <RegistryValue
                 Root="HKCU"
-                Key="Software/GHRLClient"
+                Key="Software\GHRLWPFClient"
                 Name="installed"
-                Type="integer"
+                Type="string"
                 Value="1"
                 KeyPath="yes"/>
         </Component>
@@ -108,9 +167,9 @@
           </Shortcut>
           <RegistryValue
                 Root="HKCU"
-                Key="Software/GHRLWebInterfaceAndService"
+                Key="Software\GHRLWebInterface"
                 Name="installed"
-                Type="integer"
+                Type="string"
                 Value="1"
                 KeyPath="yes"/>
         </Component>
@@ -120,17 +179,10 @@
           <RemoveFolder Id="DesktopFolder" On="uninstall" />
           <RegistryValue
                 Root="HKCU"
-                Key="Software/GHRLClient"
+                Key="Software\GHRLInstalled"
                 Name="installed"
-                Type="integer"
-                Value="0"
-                KeyPath="no"/>
-          <RegistryValue
-                Root="HKCU"
-                Key="Software/GHRLWebInterfaceAndService"
-                Name="installed"
-                Type="integer"
-                Value="0"
+                Type="string"
+                Value="1"
                 KeyPath="yes"/>
         </Component>
       </Directory>

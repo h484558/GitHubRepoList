@@ -7,7 +7,7 @@
     <ProjectGuid>0d95a0fc-d31e-4f22-a801-10c415013b60</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>GitHubRepoListSetup</OutputName>
-    <OutputType>Package</OutputType>
+    <OutputType>Bundle</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>

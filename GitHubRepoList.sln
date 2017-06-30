@@ -12,13 +12,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubRepoListWPFClient", "
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "GitHubRepoListSetup", "GitHubRepoListSetup\GitHubRepoListSetup.wixproj", "{0D95A0FC-D31E-4F22-A801-10C415013B60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLConnectionValidator", "SQLConnectionValidator\SQLConnectionValidator.csproj", "{AC9C7D34-F118-4228-A138-40AE19D7EA5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WIX_CA_SQLConnectionValidator", "SQLConnectionValidator\WIX_CA_SQLConnectionValidator.csproj", "{AC9C7D34-F118-4228-A138-40AE19D7EA5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IISConfigurationValidator", "IISConfigurationValidator\IISConfigurationValidator.csproj", "{45D7E885-8563-4CA4-A1D9-989052D6B94B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WIX_CA_IISConfigurationValidator", "IISConfigurationValidator\WIX_CA_IISConfigurationValidator.csproj", "{45D7E885-8563-4CA4-A1D9-989052D6B94B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceUrlValidator", "WebServiceUrlValidator\WebServiceUrlValidator.csproj", "{BE04E2D6-55EE-4AEA-ACE9-2DBDC602400A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WIX_CA_WebServiceUrlValidator", "WebServiceUrlValidator\WIX_CA_WebServiceUrlValidator.csproj", "{BE04E2D6-55EE-4AEA-ACE9-2DBDC602400A}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "GitHubRepoListBootstrapper", "GitHubRepoListBootstrapper\GitHubRepoListBootstrapper.wixproj", "{A72D743A-4E84-4B5C-A8C1-B5B68A22EA92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WIX_CA_DBManager", "DBManager\WIX_CA_DBManager.csproj", "{00CDBF06-39ED-420E-8202-CAC37AD2BB96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,12 +68,12 @@ Global
 		{BE04E2D6-55EE-4AEA-ACE9-2DBDC602400A}.Release|Any CPU.ActiveCfg = Release|x86
 		{BE04E2D6-55EE-4AEA-ACE9-2DBDC602400A}.Release|x86.ActiveCfg = Release|x86
 		{BE04E2D6-55EE-4AEA-ACE9-2DBDC602400A}.Release|x86.Build.0 = Release|x86
-		{A72D743A-4E84-4B5C-A8C1-B5B68A22EA92}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{A72D743A-4E84-4B5C-A8C1-B5B68A22EA92}.Debug|x86.ActiveCfg = Debug|x86
-		{A72D743A-4E84-4B5C-A8C1-B5B68A22EA92}.Debug|x86.Build.0 = Debug|x86
-		{A72D743A-4E84-4B5C-A8C1-B5B68A22EA92}.Release|Any CPU.ActiveCfg = Release|x86
-		{A72D743A-4E84-4B5C-A8C1-B5B68A22EA92}.Release|x86.ActiveCfg = Release|x86
-		{A72D743A-4E84-4B5C-A8C1-B5B68A22EA92}.Release|x86.Build.0 = Release|x86
+		{00CDBF06-39ED-420E-8202-CAC37AD2BB96}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{00CDBF06-39ED-420E-8202-CAC37AD2BB96}.Debug|x86.ActiveCfg = Debug|x86
+		{00CDBF06-39ED-420E-8202-CAC37AD2BB96}.Debug|x86.Build.0 = Debug|x86
+		{00CDBF06-39ED-420E-8202-CAC37AD2BB96}.Release|Any CPU.ActiveCfg = Release|x86
+		{00CDBF06-39ED-420E-8202-CAC37AD2BB96}.Release|x86.ActiveCfg = Release|x86
+		{00CDBF06-39ED-420E-8202-CAC37AD2BB96}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

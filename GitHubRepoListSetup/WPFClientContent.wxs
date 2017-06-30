@@ -7,34 +7,34 @@
     </Fragment>
     <Fragment>
         <ComponentGroup Id="GHRLWPFComponents">
-            <Component Id="cmp7D4B2BE94846075547EE533074777460" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{9148639C-C620-4196-9C7A-34B51B168D72}">
+            <Component Id="cmp7D4B2BE94846075547EE533074777460" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{3159ACE6-4E73-4632-8A24-10FB7E054229}">
                 <File Id="fil139D6A247A22793B5129095C827097D6" KeyPath="yes" Source="$(var.wpfClientDir)\EntityFramework.dll" />
             </Component>
-            <Component Id="cmpA777ADD6A871D3A461259FF13B73B604" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{B1A3F3AF-DFE5-4589-9961-F81D88DCF58E}">
+            <Component Id="cmpA777ADD6A871D3A461259FF13B73B604" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{136D5C8A-1D5C-4B1A-9939-1E3C9EC4E6DF}">
                 <File Id="filF3330893BB371C077545794658683BD3" KeyPath="yes" Source="$(var.wpfClientDir)\EntityFramework.xml" />
             </Component>
-            <Component Id="cmpC40DCCA27712F81549668DFCD9511C9B" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{AF05DCE0-14AB-4479-BF03-0F46934A1AAA}">
+            <Component Id="cmpC40DCCA27712F81549668DFCD9511C9B" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{F004EBED-8BFC-4269-91AF-37F6B65483CB}">
                 <File Id="filB56E536B2896B0F60960C5A9DC947C26" KeyPath="yes" Source="$(var.wpfClientDir)\GitHubRepoList.dll" />
             </Component>
-            <Component Id="cmp717785368DD46F569EA96D1BD8D74F14" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{E163A186-ABAD-4535-A80C-D4C56A76DE27}">
+            <Component Id="cmp717785368DD46F569EA96D1BD8D74F14" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{F021F8EC-6318-4848-BECB-BC5B1ACB2624}">
                 <File Id="fil76F5E096E205B4298145D5C037332E19" KeyPath="yes" Source="$(var.wpfClientDir)\GitHubRepoList.pdb" />
             </Component>
-            <Component Id="cmp217F1FC41E596A9B7784B36255662993" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{2A1F5A2F-F1B2-486D-B31F-83F787B583ED}">
+            <Component Id="cmp217F1FC41E596A9B7784B36255662993" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{8BCC6E8D-B803-44E0-AFC5-40C6B5C8B1FA}">
                 <File Id="filD8BD5DDDB6A1D9904A7BF8DD41855711" KeyPath="yes" Source="$(var.wpfClientDir)\GitHubRepoListWPFClient.application" />
             </Component>
-            <Component Id="cmpD73E19AFA1A363896B7BF4DEDBA3FC4E" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{E17B5919-48CE-4E5E-85A2-0B0AB09AC675}">
+            <Component Id="cmpD73E19AFA1A363896B7BF4DEDBA3FC4E" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{65C82C27-4B0E-4519-86DB-590BD5862C28}">
                 <File Id="fil07CBA790C2BF629BE6CC48CE6EAC5B45" KeyPath="yes" Source="$(var.wpfClientDir)\GitHubRepoListWPFClient.exe" />
             </Component>
-            <Component Id="cmp045E2FC2174821E3C81DEE54C491F167" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{60FAAE2A-5089-4357-AE0A-AE83AB6EF6F6}">
+            <Component Id="cmp045E2FC2174821E3C81DEE54C491F167" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{150F6642-C21F-4099-B127-B3FB8334C332}">
                 <File Id="filA219FE6D2BBE716CC340282ECDA5EA27" KeyPath="yes" Source="$(var.wpfClientDir)\GitHubRepoListWPFClient.exe.config" />
             </Component>
-            <Component Id="cmp97CEAD368CDD87FA10131E2674E8D45E" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{B037ADD1-DC88-4DEB-9DB2-445FD2215718}">
+            <Component Id="cmp97CEAD368CDD87FA10131E2674E8D45E" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{58180232-ED57-451B-B663-3E8E7287864A}">
                 <File Id="filD9663F95D4238319DC8BBFAAD9EC3118" KeyPath="yes" Source="$(var.wpfClientDir)\GitHubRepoListWPFClient.exe.manifest" />
             </Component>
-            <Component Id="cmpF74EF296B7E018A14C5255EF0480DB02" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{D81B6320-A4D6-4283-8B84-04909A45F371}">
+            <Component Id="cmpF74EF296B7E018A14C5255EF0480DB02" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{CBEB44BF-98D7-4265-83C4-E2BA1C9D2D78}">
                 <File Id="filF4644B939B47C7AE544A06805B7C3215" KeyPath="yes" Source="$(var.wpfClientDir)\GitHubRepoListWPFClient.pdb" />
             </Component>
-            <Component Id="cmp968B657C8F31A221759BE714CD66B1FD" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{61CB9B95-0570-4B13-A40D-D5AC8FE0C5CA}">
+            <Component Id="cmp968B657C8F31A221759BE714CD66B1FD" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{8D12465A-BCAB-4271-9D5C-EB143AF34C5E}">
                 <Class Id="{0B0A67FA-74C9-3E3D-A9D0-547D01F2A54B}" Context="InprocServer32" Description="Microsoft.Xml.Serialization.GeneratedAssembly.ArrayOfObjectSerializer33" ThreadingModel="both" ForeignServer="mscoree.dll">
                     <ProgId Id="Microsoft.Xml.Serialization.GeneratedAssembly.ArrayOfObjectSerializer33" Description="Microsoft.Xml.Serialization.GeneratedAssembly.ArrayOfObjectSerializer33" />
                 </Class>
@@ -505,40 +505,40 @@
                 <RegistryValue Root="HKCR" Key="CLSID\{F7F7EFCA-8062-3359-8576-BA1DC537D3CC}\InprocServer32" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
                 <RegistryValue Root="HKCR" Key="CLSID\{F7F7EFCA-8062-3359-8576-BA1DC537D3CC}\InprocServer32" Name="CodeBase" Value="file:///[#fil0CDC79E2F6C86C6750F77246ADB2D902]" Type="string" Action="write" />
             </Component>
-            <Component Id="cmp2EBEFACCC04915053912D66F57338F2A" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{626B60AC-2A41-47B6-937D-5DF1F3981A83}">
+            <Component Id="cmp2EBEFACCC04915053912D66F57338F2A" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{87DCED66-42AD-44C7-9AE8-BDD160DF9466}">
                 <File Id="fil7DD482C2E9E5FE607E4A5D0A12538AC3" KeyPath="yes" Source="$(var.wpfClientDir)\Microsoft.Web.Infrastructure.dll" />
             </Component>
-            <Component Id="cmp629BCF21180F6980548D1F3F07EA73CD" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{6AAB555C-0897-4172-AD94-98ADAB560F5D}">
+            <Component Id="cmp629BCF21180F6980548D1F3F07EA73CD" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{81088685-9BC2-46B6-B6DD-D151FD985FEF}">
                 <File Id="filADE39F2A2FC5DDBD0F5468BAE9FCA64B" KeyPath="yes" Source="$(var.wpfClientDir)\System.Web.Mvc.dll" />
             </Component>
-            <Component Id="cmpCC913AA89B1F1849F87B9F2644DB11D5" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{63490C9B-B4FE-4B84-9D1E-B863783B4224}">
+            <Component Id="cmpCC913AA89B1F1849F87B9F2644DB11D5" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{2695B9F5-0323-431F-A830-B40DE871BEE7}">
                 <File Id="fil442C8A79611853405D6323BA0D40D6A3" KeyPath="yes" Source="$(var.wpfClientDir)\System.Web.Mvc.xml" />
             </Component>
-            <Component Id="cmpF3312CABD7292B44893F11B6172EADBF" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{D1ED659D-EBBF-421B-A5D7-87D9174C88D3}">
+            <Component Id="cmpF3312CABD7292B44893F11B6172EADBF" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{CD59666C-DA6D-4798-B907-3FA514B3091B}">
                 <File Id="filD7F79224F8EC4F2A2F2C77F426B8A187" KeyPath="yes" Source="$(var.wpfClientDir)\System.Web.Razor.dll" />
             </Component>
-            <Component Id="cmp0A16731F66C3E847825161C1550E70FE" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{01E8A54A-0E38-4401-99F4-242BE3EB0716}">
+            <Component Id="cmp0A16731F66C3E847825161C1550E70FE" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{99FE7F9C-6B8B-4DD4-B066-72D85C456009}">
                 <File Id="fil9F2A8EFDB9E261CED09521BFEA78667C" KeyPath="yes" Source="$(var.wpfClientDir)\System.Web.Razor.xml" />
             </Component>
-            <Component Id="cmp305AAA40A935357A13D3C4A6E6428A79" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{E6EA0E06-817C-42FA-A23A-C8FA205EA175}">
+            <Component Id="cmp305AAA40A935357A13D3C4A6E6428A79" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{C2D4DA84-91A7-4571-B80B-E5CFE88E9F94}">
                 <File Id="filF29C89AC01117A443F8E509BD82C230E" KeyPath="yes" Source="$(var.wpfClientDir)\System.Web.WebPages.Deployment.dll" />
             </Component>
-            <Component Id="cmpD4AD38303B3FB88751A9992EBF29D7F9" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{4F173C5B-0FCF-4368-903A-D028361DC8BE}">
+            <Component Id="cmpD4AD38303B3FB88751A9992EBF29D7F9" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{2ECB1D9A-857B-40FC-9DA0-858267A58559}">
                 <File Id="fil80F66F779ED909DE0C701C0CC9D9599E" KeyPath="yes" Source="$(var.wpfClientDir)\System.Web.WebPages.Deployment.xml" />
             </Component>
-            <Component Id="cmpE8B6832DEDF21ED93259CD732C008F5A" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{6AA2C702-A3C7-44F9-BEAE-5802CA41A017}">
+            <Component Id="cmpE8B6832DEDF21ED93259CD732C008F5A" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{1149C8BD-0ED3-4796-B20F-68A1F28440D5}">
                 <File Id="fil0A65D4B9A555CDF57B493FF68E2798D8" KeyPath="yes" Source="$(var.wpfClientDir)\System.Web.WebPages.dll" />
             </Component>
-            <Component Id="cmp55FAC736D7E7E8B5DC235F5B107A845E" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{C8DD4FD2-B8A3-45C0-8E6E-3DE76EC8FF6F}">
+            <Component Id="cmp55FAC736D7E7E8B5DC235F5B107A845E" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{5609B68D-A416-48EF-8E1F-93B5C21139FE}">
                 <File Id="filEF51EF09989E0E06692EE0E8ED92FA0A" KeyPath="yes" Source="$(var.wpfClientDir)\System.Web.WebPages.Razor.dll" />
             </Component>
-            <Component Id="cmp6025EA341099F7F89291F05B797D879A" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{84BC3FC3-E1B7-4731-961C-5B62471FA4C6}">
+            <Component Id="cmp6025EA341099F7F89291F05B797D879A" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{2049DA4D-00BB-4DA1-87AE-71DC82AA8BBC}">
                 <File Id="fil4C98F569251AEB931090448B4BD7755A" KeyPath="yes" Source="$(var.wpfClientDir)\System.Web.WebPages.Razor.xml" />
             </Component>
-            <Component Id="cmp0C0457498A797DCB143AA4BA8C158B85" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{F473EF3C-B850-4B6F-BF83-F776441E5790}">
+            <Component Id="cmp0C0457498A797DCB143AA4BA8C158B85" Directory="WPFCLIENT_INSTALLFOLDER" Guid="{FC18B2AD-9680-48F2-A3DD-8F08A5D53ED0}">
                 <File Id="filAF7C3CD31933E7B5B86B14784E9D9492" KeyPath="yes" Source="$(var.wpfClientDir)\System.Web.WebPages.xml" />
             </Component>
-            <Component Id="cmp6E19C6D22F5C9BC92F465EBB01970432" Directory="dirE0B95840B47EB0DFF77172B56EBBB711" Guid="{8EC186B1-5A2A-4C1B-BD23-51B89FC1F9F6}">
+            <Component Id="cmp6E19C6D22F5C9BC92F465EBB01970432" Directory="dirE0B95840B47EB0DFF77172B56EBBB711" Guid="{C1FCA9DC-9F36-4DAE-9509-D572967ACAE0}">
                 <File Id="fil9AA96CC1EAC9B2BD353E3A8BEF3CE92F" KeyPath="yes" Source="$(var.wpfClientDir)\app.publish\GitHubRepoListWPFClient.exe" />
             </Component>
         </ComponentGroup>

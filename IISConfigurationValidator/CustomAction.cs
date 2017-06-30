@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Deployment.WindowsInstaller;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.DirectoryServices;
 using System.Net.NetworkInformation;
 using System.Net;
-using Microsoft.Web.Administration;
 
 namespace IISConfigurationValidator
 {
@@ -50,6 +46,13 @@ namespace IISConfigurationValidator
                 return ActionResult.Success;
             }
 
+            if (port < 1 || port > 65535)
+            {
+                MessageBox.Show("Invalid port value: '" + port + "'! Valid port range is 1-65535.", "Invalid IIS Configuration", MessageBoxButton.OK, MessageBoxImage.Error);
+                session["IIS_CONFIGURATION_SUCCESS"] = "0";
+                return ActionResult.Success;
+            }
+
             // Check if port is free
             IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
             IPEndPoint[] ipEndPoints = ipGlobalProperties.GetActiveTcpListeners();
@@ -64,21 +67,7 @@ namespace IISConfigurationValidator
                 }
             }
 
-            // Check if there is no site with such name
-            var iisManager = new ServerManager();
-            SiteCollection sites = iisManager.Sites;
-
-            foreach (var site in sites)
-            {
-                if (site.Name == appName)
-                {
-                    MessageBox.Show("Site '" + appName + "' already exists! Please choose another site name.", "Invalid IIS Configuration", MessageBoxButton.OK, MessageBoxImage.Error);
-                    session["IIS_CONFIGURATION_SUCCESS"] = "0";
-                    return ActionResult.Success;
-                }
-            }
-
-
+            session["WEB_URL"] = string.Format("http://localhost:{0}/", port);
             session["IIS_CONFIGURATION_SUCCESS"] = "1";
             return ActionResult.Success;
         }
