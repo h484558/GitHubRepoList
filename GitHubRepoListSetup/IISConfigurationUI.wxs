@@ -9,6 +9,11 @@
         <Control Id="AppNameEdit" Type="Edit" X="45" Y="85" Width="220" Height="18" Property="APP_NAME" Text="{80}" />
         <Control Id="PortLabel" Type="Text" X="45" Y="105" Width="220" Height="15" TabSkip="no" Text="Application Port" />
         <Control Id="PortEdit" Type="Edit" X="45" Y="117" Width="220" Height="18" Property="APP_PORT" Text="{80}" />
+        <Control Id="HostnameLabel" Type="Text" X="45" Y="137" Width="220" Height="15" TabSkip="no" Text="Hostname" />
+        <Control Id="HostnameEdit" Type="Edit" X="45" Y="149" Width="220" Height="18" Property="APP_HOSTNAME" Text="{80}" />
+        <Control Id="UseSameForWPFCheckBox" Type="CheckBox" X="45" Y="169" Width="220" Height="17" Property="USE_WEBSERVICE_SETTINGS_FOR_CLIENT" Hidden="yes" CheckBoxValue="1" Text="Use same settings for WPF Client">
+          <Condition Action="show"><![CDATA[&WPFComponentFeature = 3]]></Condition>
+        </Control>
         <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="Back"></Control>
         <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="Next"></Control>
         <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">

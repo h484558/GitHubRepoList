@@ -17,6 +17,7 @@ namespace IISConfigurationValidator
             string appName = session["APP_NAME"];
             string appPort = session["APP_PORT"];
             string appPool = session["APP_POOL"];
+            string appHost = session["APP_HOSTNAME"];
 
             // Check app pool and app name
             Regex appNameAndPoolRegex = new Regex(@"^\w[\w\s]+$");
@@ -53,6 +54,14 @@ namespace IISConfigurationValidator
                 return ActionResult.Success;
             }
 
+            // Check hostname
+            if (Uri.CheckHostName(appHost) == UriHostNameType.Unknown)
+            {
+                MessageBox.Show("Invalid Hostname: '" + appHost + "'!", "Invalid IIS Configuration", MessageBoxButton.OK, MessageBoxImage.Error);
+                session["IIS_CONFIGURATION_SUCCESS"] = "0";
+                return ActionResult.Success;
+            }
+
             // Check if port is free
             IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
             IPEndPoint[] ipEndPoints = ipGlobalProperties.GetActiveTcpListeners();
@@ -67,7 +76,7 @@ namespace IISConfigurationValidator
                 }
             }
 
-            session["WEB_URL"] = string.Format("http://localhost:{0}/", port);
+            session["WEB_URL"] = string.Format("http://{0}:{1}/", session["APP_HOSTNAME"], port);
             session["IIS_CONFIGURATION_SUCCESS"] = "1";
             return ActionResult.Success;
         }

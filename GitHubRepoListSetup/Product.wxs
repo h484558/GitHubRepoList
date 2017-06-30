@@ -19,7 +19,7 @@
       <ComponentRef Id="CleanShortcuts" />
 		</Feature>
 
-    <Feature Id="WPFComponentFeature" Title="WPF Client Component" Level="1" AllowAdvertise="no">
+    <Feature Id="WPFComponentFeature" Title="WPF Client Component" Level="1" AllowAdvertise="no" ConfigurableDirectory="WPFCLIENT_INSTALLFOLDER">
       <ComponentGroupRef Id="GHRLWPFComponents" />
       <ComponentRef Id="WpfClientConfigUpdaterComponent" />
       <ComponentRef Id="ApplicationShortcut" />
@@ -45,6 +45,8 @@
     <Property Id="APP_POOL" Value="GHRLAppPool" Secure="yes" />
     <Property Id="APP_NAME" Value="GHRLWebsite" Secure="yes" />
     <Property Id="APP_PORT" Value="59130" Secure="yes" />
+    <Property Id="APP_HOSTNAME" Value="localhost" Secure="yes" />
+    <Property Id="USE_WEBSERVICE_SETTINGS_FOR_CLIENT" Value="1" Secure="yes" />
     <Property Id="IIS_CONFIGURATION_SUCCESS" Value="0" />
     
     <!--Web Interface and Service URL-->
@@ -72,7 +74,7 @@
     <CustomAction Id="CA_UnSet_WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="" />
 
     <!--Web Interface shortcut-->
-    <SetProperty Id="URL" Value="http://localhost:[APP_PORT]/" Sequence="execute"  Before="CreateShortcuts" />
+    <SetProperty Id="URL" Value="http://[APP_HOSTNAME]:[APP_PORT]/" Sequence="execute"  Before="CreateShortcuts" />
     
     <!--Drop DB on uninstall-->
     
